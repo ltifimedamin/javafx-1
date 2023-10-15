@@ -1,0 +1,207 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tn.esprit.gui;
+
+import static java.lang.Integer.parseInt;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import tn.esprit.entities.Evennement;
+import tn.esprit.entities.Participant;
+import tn.esprit.entities.User;
+import tn.esprit.services.Eventservice;
+import tn.esprit.services.Participationservices;
+
+/**
+ * FXML Controller class
+ *
+ * @author Med Iheb
+ */
+public class AddparticipantController implements Initializable {
+
+    @FXML
+    private TableView<Participant> TableviewParticipant;
+    @FXML
+    private TableColumn<Participant, Integer> TableviewNumero;
+    @FXML
+    private TableColumn<Participant,  LocalDate> tableviewDate;
+    @FXML
+    private Button Participantsupprimer;
+    @FXML
+    private Button Modifier;
+    @FXML
+    private DatePicker recDateparticipant;
+    
+    @FXML
+    private TextField recNumero;
+
+    @FXML
+    private TextField recRecherche;
+    @FXML
+    private TableColumn<Participant, String> nameeventview;
+    @FXML
+    private TableColumn<Participant, String> tableNomParticipant;
+
+    /**
+     * Initializes the controller class.
+     */
+      int    myIndex;
+    
+ 
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        TableviewParticipant ();
+    }    
+
+
+    @FXML
+    private void supprimerParicipant(ActionEvent event) {
+        
+         myIndex =   TableviewParticipant.getSelectionModel().getSelectedIndex();
+         int numero = Integer.parseInt(String.valueOf( TableviewParticipant.getItems().get(myIndex).getNumero()));
+      
+
+          Participationservices participation=new Participationservices();
+          participation.supprimer(numero);
+              TableviewParticipant ();
+            
+        
+                
+    }
+
+    @FXML
+    private void ModiferParticipant(ActionEvent event) {
+         /* myIndex = TableviewParticipant.getSelectionModel().getSelectedIndex();
+       int numero = Integer.parseInt(String.valueOf(TableviewParticipant.getItems().get(myIndex).getNumero()));
+       Evennement selectedEvent= new Evennement();
+       selectedEvent.setId(numero);
+       User userConnecter = new User(); 
+       userConnecter.setIduser(1);
+        int Numero= parseInt(recNumero.getText());
+       Participant particperAEvent=new Participant(LocalDate.now(), numero, userConnecter ,selectedEvent);
+        Participationservices participation=new Participationservices();
+        participation.modifier(particperAEvent);
+           TableviewParticipant ();*/
+        
+        /////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+         /*myIndex = EventTable.getSelectionModel().getSelectedIndex();
+       int idEvent = Integer.parseInt(String.valueOf(EventTable.getItems().get(myIndex).getId()));
+        
+     String titre;
+     LocalDate date;
+     String  description;
+     String adresse;    
+     String img="Haw Jitek";   
+     String lieu ;
+    titre =recTitre.getText();
+    description= recDiscription.getText();
+    adresse= recAdresse.getText();
+    date= recDate.getValue();
+    lieu =recLieu.getText();
+        Evennement evennementPourUpdate = new  Evennement( idEvent,titre, date,  description, img,  adresse, lieu);
+    Eventservice Serviceevent = new Eventservice();
+    Serviceevent.modifier(evennementPourUpdate);
+    EventTable();
+*/
+         
+     /* myIndex =   TableviewParticipant.getSelectionModel().getSelectedIndex();
+         int Numero = Integer.parseInt(String.valueOf( TableviewParticipant.getItems().get(myIndex).getNumero()));    
+        
+            LocalDate date;
+           
+            date=recDateparticipant.getValue();
+            Numero= parseInt(recNumero.getText());
+               
+       Evennement selectedEvent= new Evennement();
+       selectedEvent.setId());
+       User userConnecter = new User(); 
+       userConnecter.setIduser(1);
+       
+            
+            
+            
+             Participant particperAEvent=new Participant(LocalDate.now(),Numero , userConnecter ,selectedEvent);
+             Participationservices participation=new Participationservices();
+              participation.modifier(particperAEvent);
+                 TableviewParticipant ();
+  */          
+        
+        
+        
+    }
+    public void TableviewParticipant(){
+         Participationservices participation=new Participationservices();
+     ArrayList<Participant> challengess = new ArrayList<>();
+              
+                     challengess=  (ArrayList<Participant>) participation.getAll();
+              
+  
+    ObservableList<Participant> obsl = FXCollections.observableArrayList(challengess); 
+  
+    TableviewParticipant.setItems(obsl);
+    tableviewDate.setCellValueFactory(new  PropertyValueFactory<>("datepar"));
+    TableviewNumero.setCellValueFactory(new  PropertyValueFactory<>("numero"));
+    
+     nameeventview.setCellValueFactory(cellData -> 
+        new SimpleStringProperty(cellData.getValue().getEvent().getTitre()));
+        tableNomParticipant.setCellValueFactory(cellData -> 
+        new SimpleStringProperty(cellData.getValue().getUser().getUsername()));
+     
+
+
+//    tableviewuserr.setCellValueFactory(new  PropertyValueFactory<>("username"));
+  //  nameeventview.setCellValueFactory(new  PropertyValueFactory<>("titre"));
+ 
+
+TableviewParticipant.setRowFactory(tv -> {
+     TableRow<Participant> myRow = new TableRow<>();
+     myRow.setOnMouseClicked (event ->
+     {
+        if (event.getClickCount() == 1 && (!myRow.isEmpty()))
+        {
+           myIndex =  TableviewParticipant.getSelectionModel().getSelectedIndex();
+            
+     
+    //recTitre.setText( TableviewParticipant.getItems().get(myIndex).getTitre());
+     //recDiscription.setText( TableviewParticipant.getItems().get(myIndex).getDescription());
+    //nomclientacht.setText(achatTV.getItems().get(myIndex).getUser().getFirstName());
+ recDateparticipant.setValue( TableviewParticipant.getItems().get(myIndex).getDatepar()); 
+    recNumero.setText( Integer.toString(TableviewParticipant.getItems().get(myIndex).getNumero()));
+  
+      
+   // recLieu.setText( TableviewParticipant.getItems().get(myIndex).getLieu());
+
+         }
+        
+            
+            
+            
+        
+     });
+        return myRow;
+                   });
+    
+    }
+    
+}
