@@ -48,9 +48,9 @@ Connection cnx;
     }
 
     @Override
-    public void modifier(Participant participation) {
+    public void modifier(Participant participation,int id) {
         
-       String req="UPDATE participant SET `datepar` = ?,`numero` = ?, `iduser` = ?,  `idevent` = ? WHERE `numero`=" + participation.getNumero();
+       String req="UPDATE participant SET `datepar` = ?,`numero` = ?, `iduser` = ?,  `idevent` = ? WHERE `numero`=" + id;
         try {
             PreparedStatement pre=cnx.prepareStatement(req);
             pre.setDate(1, Date.valueOf(participation.getDatepar()));

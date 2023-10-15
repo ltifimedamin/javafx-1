@@ -24,6 +24,6 @@
       <Button fx:id="Modifier" layoutX="613.0" layoutY="486.0" mnemonicParsing="false" onAction="#ModiferParticipant" prefHeight="26.0" prefWidth="167.0" text="Modifier" />
       <DatePicker fx:id="recDateparticipant" layoutX="216.0" layoutY="437.0" />
       <TextField fx:id="recNumero" layoutX="216.0" layoutY="500.0" />
-      <TextField fx:id="recRecherche" layoutX="216.0" layoutY="567.0" />
+      <TextField fx:id="recRecherche" layoutX="216.0" layoutY="567.0" visible="false" />
    </children>
 </AnchorPane>

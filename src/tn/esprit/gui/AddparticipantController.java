@@ -91,17 +91,16 @@ public class AddparticipantController implements Initializable {
 
     @FXML
     private void ModiferParticipant(ActionEvent event) {
-         /* myIndex = TableviewParticipant.getSelectionModel().getSelectedIndex();
-       int numero = Integer.parseInt(String.valueOf(TableviewParticipant.getItems().get(myIndex).getNumero()));
+       int numero = parseInt(recRecherche.getText());
        Evennement selectedEvent= new Evennement();
-       selectedEvent.setId(numero);
+       selectedEvent.setId(18);
        User userConnecter = new User(); 
        userConnecter.setIduser(1);
         int Numero= parseInt(recNumero.getText());
-       Participant particperAEvent=new Participant(LocalDate.now(), numero, userConnecter ,selectedEvent);
+       Participant particperAEvent=new Participant(LocalDate.now(), Numero, userConnecter ,selectedEvent);
         Participationservices participation=new Participationservices();
-        participation.modifier(particperAEvent);
-           TableviewParticipant ();*/
+        participation.modifier(particperAEvent,numero);
+           TableviewParticipant ();
         
         /////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////
@@ -188,7 +187,7 @@ TableviewParticipant.setRowFactory(tv -> {
     //nomclientacht.setText(achatTV.getItems().get(myIndex).getUser().getFirstName());
  recDateparticipant.setValue( TableviewParticipant.getItems().get(myIndex).getDatepar()); 
     recNumero.setText( Integer.toString(TableviewParticipant.getItems().get(myIndex).getNumero()));
-  
+    recRecherche.setText( Integer.toString(TableviewParticipant.getItems().get(myIndex).getNumero()));
       
    // recLieu.setText( TableviewParticipant.getItems().get(myIndex).getLieu());
 
