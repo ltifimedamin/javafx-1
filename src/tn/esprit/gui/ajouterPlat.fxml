@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="780.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.gui.AjouterPlatController">
+   <children>
+      <TableView fx:id="pltTV" layoutX="109.0" layoutY="131.0" prefHeight="200.0" prefWidth="694.0">
+         <columns>
+            <TableColumn fx:id="nomview" prefWidth="142.0" text="Nom" />
+            <TableColumn fx:id="descriptionview" prefWidth="142.0" text="Description" />
+            <TableColumn fx:id="imageview" prefWidth="142.0" text="Image" />
+            <TableColumn fx:id="prixview" prefWidth="142.0" text="Prix" />
+            <TableColumn fx:id="categorieview" prefWidth="124.7999267578125" text="Categorie" />
+            <TableColumn fx:id="plat_idview" minWidth="0.0" prefWidth="0.0" text="Categorie" />
+            <TableColumn fx:id="plat_idView" minWidth="0.0" prefWidth="0.0" text="id" />
+         </columns>
+      </TableView>
+      <TextField fx:id="Rechercheplt" layoutX="109.0" layoutY="89.0" prefHeight="26.0" prefWidth="714.0" promptText="Chercher un plat..." />
+      <Text layoutX="96.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" />
+      <Text layoutX="95.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
+      <Text layoutX="96.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image" />
+      <Text layoutX="415.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix" />
+      <Text layoutX="415.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categorie" />
+      <TextField fx:id="nomplt" layoutX="189.0" layoutY="377.0" />
+      <TextField fx:id="descplt" layoutX="189.0" layoutY="428.0" />
+      <Button fx:id="imgplt" layoutX="189.0" layoutY="501.0" mnemonicParsing="false" text="Importer Image" />
+      <Button fx:id="btajtplt" layoutX="758.0" layoutY="370.0" mnemonicParsing="false" onAction="#PlatAdd" text="Ajouter" />
+      <Button fx:id="btmdfplt" layoutX="758.0" layoutY="428.0" mnemonicParsing="false" onAction="#PlatUpdate" text="Modifier" />
+      <Button fx:id="btsupplt" layoutX="757.0" layoutY="488.0" mnemonicParsing="false" onAction="#PlatDeleted" text="Supprimer" />
+      <ComboBox fx:id="catgbox" layoutX="489.0" layoutY="428.0" prefWidth="150.0" />
+      <Text layoutX="282.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion des Plats">
+         <font>
+            <Font name="Times New Roman" size="46.0" />
+         </font>
+      </Text>
+      <Button fx:id="rtrplt" layoutX="787.0" layoutY="674.0" mnemonicParsing="false" text="Retour" />
+      <TextField fx:id="prixplt" layoutX="490.0" layoutY="377.0" />
+   </children>
+</AnchorPane>
