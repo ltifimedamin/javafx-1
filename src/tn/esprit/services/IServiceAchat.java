@@ -5,8 +5,10 @@
  */
 package tn.esprit.services;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import tn.esprit.entities.TypeC;
 
 /**
  *
@@ -21,4 +23,7 @@ public interface IServiceAchat<Achat> {
 
     List<Achat> recuperer() throws SQLException ;
     
+    List<Achat> recupererByDate(Date date) throws SQLException;
+    
+    List<Achat> recupererByType(TypeC type) throws SQLException;
 }

@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tn.esprit.entities.CategorieP;
-import tn.esprit.entities.Commande;
 import tn.esprit.entities.Plat;
 import tn.esprit.entities.TypeC;
 
@@ -67,7 +66,6 @@ public class ServicePlat implements IservicePlat<Plat>{
 
     }
     
-
     @Override
     public void supprimer(int i) throws SQLException {
     String req = "DELETE FROM plat WHERE idplat = ?";
@@ -98,6 +96,89 @@ public class ServicePlat implements IservicePlat<Plat>{
         return plats;
     }
     
+  
+
+    @Override
+    public List<Plat> recupererByCategorie(CategorieP categorie) throws SQLException {
+        List<Plat> plats = new ArrayList<>();
+    String req = "SELECT * FROM plat WHERE categorie = ?";
+    PreparedStatement st = connection.prepareStatement(req);
+    st.setString(1, categorie.name()); 
+
+    ResultSet rs = st.executeQuery();
+
+    while (rs.next()) {
+        Plat plt = new Plat();
+        plt.setIdplat(rs.getInt("idplat"));
+        plt.setNom(rs.getString("nom"));
+        plt.setDescription(rs.getString("description"));
+        plt.setImage(rs.getString("image"));
+        plt.setPrix(rs.getFloat("prix"));
+        plt.setCategorie(CategorieP.valueOf(rs.getString("categorie")));
+
+
+        plats.add(plt);
+    }
+
+    return plats;
+    }
+
+    @Override
+    public List<Plat> recupererByNom(String nom) throws SQLException {
+         List<Plat> plats = new ArrayList<>();
+    String req = "SELECT * FROM plat WHERE nom = ?";
+    PreparedStatement st = connection.prepareStatement(req);
+    st.setString(1, nom);
+
+    ResultSet rs = st.executeQuery();
+
+    while (rs.next()) {
+        Plat plt = new Plat();
+        plt.setIdplat(rs.getInt("idplat"));
+        plt.setNom(rs.getString("nom"));
+        plt.setDescription(rs.getString("description"));
+        plt.setImage(rs.getString("image"));
+        plt.setPrix(rs.getFloat("prix"));
+        plt.setCategorie(CategorieP.valueOf(rs.getString("categorie")));
+
+        plats.add(plt);
+    }
+
+    return plats;
+    }
+
+    @Override
+    public List<Plat> recupererByPrix(float prix) throws SQLException {
+    List<Plat> plats = new ArrayList<>();
+    String req = "SELECT * FROM plat WHERE prix = ?";
+    PreparedStatement st = connection.prepareStatement(req);
+    st.setFloat(1, prix);
+
+    ResultSet rs = st.executeQuery();
+
+    while (rs.next()) {
+        Plat plt = new Plat();
+        plt.setIdplat(rs.getInt("idplat"));
+        plt.setNom(rs.getString("nom"));
+        plt.setDescription(rs.getString("description"));
+        plt.setImage(rs.getString("image"));
+        plt.setPrix(rs.getFloat("prix"));
+        plt.setCategorie(CategorieP.valueOf(rs.getString("categorie")));
+
+        plats.add(plt);
+    }
+
+    return plats;    }
+
+ 
+}
+
+    
+    
+   
+
+
+
+    
     
   
-}

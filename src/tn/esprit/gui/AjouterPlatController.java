@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -87,11 +88,11 @@ public class AjouterPlatController implements Initializable {
     @FXML
     private void PlatAdd(ActionEvent event) throws SQLException {
      String nom = nomplt.getText();      
-  String description = descplt.getText();        
-   String prixText = prixplt.getText();
-    float prix = Float.parseFloat(prixText); 
- CategorieP categorie=catgbox.getValue() ;
- Plat platPourAjouter =new Plat(  nom,  description,  "taw nrak7ouha ",  prix,  categorie);
+     String description = descplt.getText();        
+     String prixText = prixplt.getText();
+     float prix = Float.parseFloat(prixText); 
+     CategorieP categorie=catgbox.getValue() ;
+     Plat platPourAjouter =new Plat(  nom,  description,  "taw nrak7ouha ",  prix,  categorie);
         ServicePlat _servicePalt = new ServicePlat();
  
         _servicePalt.ajouter(platPourAjouter);
@@ -120,7 +121,7 @@ public class AjouterPlatController implements Initializable {
     @FXML
     private void PlatDeleted(ActionEvent event) throws SQLException {
         
-         myIndex = pltTV.getSelectionModel().getSelectedIndex();
+       myIndex = pltTV.getSelectionModel().getSelectedIndex();
        int idplat = Integer.parseInt(String.valueOf(pltTV.getItems().get(myIndex).getIdplat()));
        ServicePlat _servicePalt = new ServicePlat();
        _servicePalt.supprimer(idplat);
@@ -130,10 +131,10 @@ public class AjouterPlatController implements Initializable {
     }
     
     public void PlatTable() throws SQLException{
-          ServicePlat ServiceEvent= new ServicePlat();
+     ServicePlat ServiceEvent= new ServicePlat();
      ArrayList<Plat> challengess = new ArrayList<>();
               
-                     challengess=  (ArrayList<Plat>) ServiceEvent.recuperer();
+    challengess=  (ArrayList<Plat>) ServiceEvent.recuperer();
               
   
     ObservableList<Plat> obsl = FXCollections.observableArrayList(challengess); 
@@ -175,6 +176,8 @@ public class AjouterPlatController implements Initializable {
                    });
     
     }
+
+
     
 }
     

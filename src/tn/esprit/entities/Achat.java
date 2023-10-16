@@ -5,6 +5,8 @@
  */
 package tn.esprit.entities;
 
+import java.sql.Date;
+
 /**
  *
  * @author Med-Amine
@@ -12,25 +14,53 @@ package tn.esprit.entities;
 public class Achat {
     private int idachat;
     private User user;
-    private Commande cmnd;
     private Plat plat;
+    private float montanttotal;
     private int quantite;
+    private Date date;
+    private TypeC typec;
+   
 
     public Achat() {
     }
-   public Achat( User user, Commande cmnd, Plat plat, int quantite) {
-        this.user = user;
-        this.cmnd = cmnd;
-        this.plat = plat;
-        this.quantite = quantite;
-    }
-    public Achat(int idachat, User user, Commande cmnd, Plat plat, int quantite) {
+
+    public Achat(int idachat, User user, Plat plat, float montanttotal, int quantite, Date date, TypeC typec) {
         this.idachat = idachat;
         this.user = user;
-        this.cmnd = cmnd;
         this.plat = plat;
+        this.montanttotal = montanttotal;
         this.quantite = quantite;
+        this.date = date;
+        this.typec = typec;
     }
+
+    public Achat(User user, Plat plat, float montanttotal, int quantite, Date date, TypeC typec) {
+        this.user = user;
+        this.plat = plat;
+        this.montanttotal = montanttotal;
+        this.quantite = quantite;
+        this.date = date;
+        this.typec = typec;
+    }
+
+    public Achat(int idachat, User user, Plat plat, float montanttotal, int quantite, TypeC typec) {
+        this.idachat = idachat;
+        this.user = user;
+        this.plat = plat;
+        this.montanttotal = montanttotal;
+        this.quantite = quantite;
+        this.typec = typec;
+    }
+
+    public Achat(User user, Plat plat, float montanttotal, int quantite, TypeC typec) {
+        this.user = user;
+        this.plat = plat;
+        this.montanttotal = montanttotal;
+        this.quantite = quantite;
+        this.typec = typec;
+    }
+    
+    
 
     public int getIdachat() {
         return idachat;
@@ -48,20 +78,20 @@ public class Achat {
         this.user = user;
     }
 
-    public Commande getCmnd() {
-        return cmnd;
-    }
-
-    public void setCmnd(Commande cmnd) {
-        this.cmnd = cmnd;
-    }
-
     public Plat getPlat() {
         return plat;
     }
 
     public void setPlat(Plat plat) {
         this.plat = plat;
+    }
+
+    public float getMontanttotal() {
+        return montanttotal;
+    }
+
+    public void setMontanttotal(float montanttotal) {
+        this.montanttotal = montanttotal;
     }
 
     public int getQuantite() {
@@ -71,17 +101,28 @@ public class Achat {
     public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
-        public void setIduser(int iduser) {
+
+    public Date getDate() {
+        return date;
     }
 
-    // Setter pour idcmnd
-    public void setIdcmnd(int idcmnd) {
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public TypeC getTypec() {
+        return typec;
+    }
+
+    public void setTypec(TypeC typec) {
+        this.typec = typec;
     }
 
     @Override
     public String toString() {
-        return "Achat{" + "idachat=" + idachat + ", user=" + user + ", cmnd=" + cmnd + ", plat=" + plat + ", quantite=" + quantite + '}';
+        return "Achat{" + "idachat=" + idachat + ", user=" + user + ", plat=" + plat + ", montanttotal=" + montanttotal + ", quantite=" + quantite + ", date=" + date + ", typec=" + typec + '}'+" \n";
     }
-
+    
     
 }
+ 
