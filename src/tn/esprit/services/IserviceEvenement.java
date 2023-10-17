@@ -18,5 +18,6 @@ public interface IserviceEvenement <Evennement>{
     public void supprimer(int id);
     public Evennement getOne(Evennement even);
     public List<Evennement> getAll( );
-    
+    List<Evennement> recupererBytitre(String titre) ;
+
 }

@@ -50,13 +50,12 @@ Connection cnx;
     @Override
     public void modifier(Participant participation,int id) {
         
-       String req="UPDATE participant SET `datepar` = ?,`numero` = ?, `iduser` = ?,  `idevent` = ? WHERE `numero`=" + id;
+       String req="UPDATE participant SET `datepar` = ?,`numero` = ? WHERE `numero`=" + id;
         try {
             PreparedStatement pre=cnx.prepareStatement(req);
             pre.setDate(1, Date.valueOf(participation.getDatepar()));
             pre.setInt(2, participation.getNumero());
-            pre.setInt(3, participation.getUser().getIduser());
-            pre.setInt(4, participation.getEvent().getId());
+     
             
             pre.executeUpdate();
             System.out.println("Modifier avec succées");
@@ -137,6 +136,20 @@ Connection cnx;
         System.out.println(ex.getMessage());
     }
        return listParticipant;
+    }
+
+    @Override
+    public void supprimerMonParticipation(int idUser, int idEvent) {
+               String req="DELETE FROM participant WHERE `iduser`=? and `idevent`=? ";
+         try {
+              PreparedStatement pre= cnx.prepareStatement(req);
+              pre.setInt(1, idUser);
+              pre.setInt(2, idEvent);
+              pre.executeUpdate();
+              System.out.println("Participant deleted");
+          } catch (SQLException ex) {
+              System.out.println("ERROR SUPRIMER Participant :"+ex.getMessage());
+          }
     }
 
     

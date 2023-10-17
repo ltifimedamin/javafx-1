@@ -86,6 +86,16 @@ public class ParticpeEventController implements Initializable {
     @FXML
     private void annulerParticipation(ActionEvent event) {
         
+          myIndex =   EventTable.getSelectionModel().getSelectedIndex();
+         //int numero = Integer.parseInt(String.valueOf( EventTable.getItems().get(myIndex).));
+        User userConnecter = new User(); 
+       userConnecter.setIduser(1);
+
+          Participationservices participation=new Participationservices();
+     
+          participation.supprimerMonParticipation(userConnecter.getIduser(),Integer.parseInt(String.valueOf( EventTable.getItems().get(myIndex).getId())));
+              
+        
     }
     
     
@@ -130,8 +140,8 @@ public class ParticpeEventController implements Initializable {
     }
        int generateNumberTicket() {
         Random rand = new Random();
-        int min = 10000;  // Smallest 5-digit number
-        int max = 99999;  // Largest 5-digit number
+        int min = 10000;  
+        int max = 99999;  
         return rand.nextInt((max - min) + 1) + min;
     }
 }

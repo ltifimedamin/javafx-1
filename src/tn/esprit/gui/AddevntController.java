@@ -170,7 +170,7 @@ public class AddevntController implements Initializable {
           Eventservice ServiceEvent= new Eventservice();
      ArrayList<Evennement> challengess = new ArrayList<>();
               
-                     challengess=  (ArrayList<Evennement>) ServiceEvent.getAll();
+           challengess=  (ArrayList<Evennement>) ServiceEvent.getAll();
               
   
     ObservableList<Evennement> obsl = FXCollections.observableArrayList(challengess); 
@@ -231,5 +231,39 @@ public class AddevntController implements Initializable {
            
        
     }
+    /* private boolean controleDeSaisie() {
+
+        if (recTitre.getText().isEmpty()) {
+            AlertUtils.makeInformation("titre ne doit pas etre vide");
+            return false;
+        }
+
+        if (recDiscription.getText().isEmpty()) {
+            AlertUtils.makeInformation("description ne doit pas etre vide");
+            return false;
+        }
+
+        if (recDate.getValue() == null) {
+            AlertUtils.makeInformation("Choisir une date pour date");
+            return false;
+        }
+ if (recAdresse.getText().isEmpty()) {
+            AlertUtils.makeInformation("description ne doit pas etre vide");
+            return false;
+        }
+         
+        }
+        if (recImage == null) {
+            AlertUtils.makeInformation("Veuillez choisir une image");
+            return false;
+        }
+
+        if (recLieu.getText().isEmpty()) {
+            AlertUtils.makeInformation("lieu ne doit pas etre vide");
+            return false;
+        }
+
+        return true;
+    }*/
     
 }

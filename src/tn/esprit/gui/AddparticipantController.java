@@ -5,6 +5,7 @@
  */
 package tn.esprit.gui;
 
+import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.time.LocalDate;
@@ -16,7 +17,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -25,6 +30,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import tn.esprit.entities.Evennement;
 import tn.esprit.entities.Participant;
 import tn.esprit.entities.User;
@@ -38,6 +44,8 @@ import tn.esprit.services.Participationservices;
  */
 public class AddparticipantController implements Initializable {
 
+    private Stage stage;
+    private Stage scene;
     @FXML
     private TableView<Participant> TableviewParticipant;
     @FXML
@@ -60,11 +68,13 @@ public class AddparticipantController implements Initializable {
     private TableColumn<Participant, String> nameeventview;
     @FXML
     private TableColumn<Participant, String> tableNomParticipant;
-
+    
     /**
      * Initializes the controller class.
      */
       int    myIndex;
+    @FXML
+    private Button retourajouterevnt;
     
  
 
@@ -93,9 +103,7 @@ public class AddparticipantController implements Initializable {
     private void ModiferParticipant(ActionEvent event) {
        int numero = parseInt(recRecherche.getText());
        Evennement selectedEvent= new Evennement();
-       selectedEvent.setId(18);
        User userConnecter = new User(); 
-       userConnecter.setIduser(1);
         int Numero= parseInt(recNumero.getText());
        Participant particperAEvent=new Participant(LocalDate.now(), Numero, userConnecter ,selectedEvent);
         Participationservices participation=new Participationservices();
@@ -182,9 +190,7 @@ TableviewParticipant.setRowFactory(tv -> {
            myIndex =  TableviewParticipant.getSelectionModel().getSelectedIndex();
             
      
-    //recTitre.setText( TableviewParticipant.getItems().get(myIndex).getTitre());
-     //recDiscription.setText( TableviewParticipant.getItems().get(myIndex).getDescription());
-    //nomclientacht.setText(achatTV.getItems().get(myIndex).getUser().getFirstName());
+   
  recDateparticipant.setValue( TableviewParticipant.getItems().get(myIndex).getDatepar()); 
     recNumero.setText( Integer.toString(TableviewParticipant.getItems().get(myIndex).getNumero()));
     recRecherche.setText( Integer.toString(TableviewParticipant.getItems().get(myIndex).getNumero()));
@@ -201,6 +207,25 @@ TableviewParticipant.setRowFactory(tv -> {
         return myRow;
                    });
     
+    }
+
+    @FXML
+    private void retouraddEvnt(ActionEvent event) {
+        
+         try {
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("addevnt.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+        
+        
     }
     
 }

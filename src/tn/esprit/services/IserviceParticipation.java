@@ -14,10 +14,11 @@ import tn.esprit.entities.User;
  * @param <Participation>
  */
 public interface  IserviceParticipation<Participation> {
-     public void ajouter(Participation participation) ;
+    public void ajouter(Participation participation) ;
     public void modifier(Participation participation,int id);
     public void supprimer(int numero);
-     public List<User> getAllUSER(User user);
+    public void supprimerMonParticipation(int idUser,int idEvent);
+    public List<User> getAllUSER(User user);
     public List<Participation> getAll( );
     
     

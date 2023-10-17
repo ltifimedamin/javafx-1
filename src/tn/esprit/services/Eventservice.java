@@ -103,6 +103,12 @@ public class Eventservice implements IserviceEvenement<Evennement>{
     @Override
     public Evennement getOne(Evennement even) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        
+        
+        
+        
     }
 
     @Override
@@ -139,9 +145,61 @@ public class Eventservice implements IserviceEvenement<Evennement>{
                 
     }
 
+    @Override
+    public List<Evennement> recupererBytitre(String titre) {
+          List<Evennement>  listE=new ArrayList<>();
+          String req = "SELECT * FROM  evennement WHERE titre = ?";
+          try {
+              PreparedStatement pre= cnx.prepareStatement(req);
+              pre.setString(1,titre );
+              ResultSet rs = ste.executeQuery(req);
+                while(rs.next()){
+                 listE.add(
+                         
+                new Evennement (
+                    rs.getInt("idevent"),
+                    rs.getString("titre"),
+                    LocalDate.parse(String.valueOf(rs.getDate("date"))),
+                    rs.getString("description"),
+                    rs.getString("img"),
+                    rs.getString("adresse"),
+                    rs.getString("lieu")
+            
+                ));
+              
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return  listE ;
+              
+              
+              /*        List<Plat> plats = new ArrayList<>();
+    String req = "SELECT * FROM plat WHERE nom = ?";
+    PreparedStatement st = connection.prepareStatement(req);
+    st.setString(1, nom);
 
+    ResultSet rs = st.executeQuery();
+
+    while (rs.next()) {
+        Plat plt = new Plat();
+        plt.setIdplat(rs.getInt("idplat"));
+        plt.setNom(rs.getString("nom"));
+        plt.setDescription(rs.getString("description"));
+        plt.setImage(rs.getString("image"));
+        plt.setPrix(rs.getFloat("prix"));
+        plt.setCategorie(CategorieP.valueOf(rs.getString("categorie")));
+
+        plats.add(plt);
     }
 
+    return plats;
+    }*/
+         
+
+
+    }
+}
     
     
 

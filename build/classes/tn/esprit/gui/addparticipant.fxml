@@ -25,5 +25,6 @@
       <DatePicker fx:id="recDateparticipant" layoutX="216.0" layoutY="437.0" />
       <TextField fx:id="recNumero" layoutX="216.0" layoutY="500.0" />
       <TextField fx:id="recRecherche" layoutX="216.0" layoutY="567.0" visible="false" />
+      <Button fx:id="retourajouterevnt" layoutX="209.0" layoutY="577.0" mnemonicParsing="false" onAction="#retouraddEvnt" prefHeight="30.0" prefWidth="135.0" text="Retour" />
    </children>
 </AnchorPane>
