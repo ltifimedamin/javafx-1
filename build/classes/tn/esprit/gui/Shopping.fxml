@@ -47,5 +47,6 @@
       <Text layoutX="106.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantité" />
       <Text layoutX="500.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" wrappingWidth="32.62384033203125" />
       <ComboBox fx:id="typeCmdbox" layoutX="574.0" layoutY="453.0" prefWidth="150.0" />
+      <Button fx:id="AnnulerAction" layoutX="879.0" layoutY="87.0" mnemonicParsing="false" onAction="#Clear_Pannier" text="Clear" />
    </children>
 </AnchorPane>

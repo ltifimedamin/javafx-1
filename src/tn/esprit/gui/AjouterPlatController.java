@@ -16,6 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -87,48 +89,114 @@ public class AjouterPlatController implements Initializable {
     int myIndex;
     @FXML
     private void PlatAdd(ActionEvent event) throws SQLException {
-     String nom = nomplt.getText();      
-     String description = descplt.getText();        
-     String prixText = prixplt.getText();
-     float prix = Float.parseFloat(prixText); 
-     CategorieP categorie=catgbox.getValue() ;
-     Plat platPourAjouter =new Plat(  nom,  description,  "taw nrak7ouha ",  prix,  categorie);
-        ServicePlat _servicePalt = new ServicePlat();
- 
-        _servicePalt.ajouter(platPourAjouter);
+    String nom = nomplt.getText();
+    String description = descplt.getText();
+    String prixText = prixplt.getText();
+    CategorieP categorie = catgbox.getValue();
+
+    if (estChampValide(nom) && estChampValide(description) && estPrixValide(prixText) && categorie != null) {
+        float prix = Float.parseFloat(prixText);
+        Plat platPourAjouter = new Plat(nom, description, "taw nrak7ouha", prix, categorie);
+        ServicePlat _servicePlat = new ServicePlat();
+        _servicePlat.ajouter(platPourAjouter);
         PlatTable();
+        
+        afficherAlerteSucces("Succès", "Plat ajouté avec succès !");
+    } else {
+
+        afficherAlerteErreur("Erreur de saisie", "Veuillez remplir tous les champs correctement.");
+    }
+}
+
+private boolean estChampValide(String champ) {
+    return !champ.isEmpty(); 
+}
+
+private boolean estPrixValide(String prixText) {
+    try {
+        float prix = Float.parseFloat(prixText);
+        return prix > 0; 
+    } catch (NumberFormatException e) {
+        return false; 
+    }
+}
+
+private void afficherAlerteErreur(String titre, String contenu) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle(titre);
+    alert.setHeaderText(contenu);
+    alert.showAndWait();
+}
+
+private void afficherAlerteSucces(String titre, String contenu) {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle(titre);
+    alert.setHeaderText(contenu);
+    alert.showAndWait();
+}
+
+private boolean estEntierPositif(String str) {
+    try {
+        int valeur = Integer.parseInt(str);
+        return valeur >= 0;
+    } catch (NumberFormatException e) {
+        return false;
+    }
+}
+
+@FXML
+private void PlatUpdate(ActionEvent event) throws SQLException {
+    myIndex = pltTV.getSelectionModel().getSelectedIndex();
     
-    }
-
-    @FXML
-    private void PlatUpdate(ActionEvent event) throws SQLException {
-       myIndex = pltTV.getSelectionModel().getSelectedIndex();
-       int idplat = Integer.parseInt(String.valueOf(pltTV.getItems().get(myIndex).getIdplat()));
+    if (myIndex >= 0) {
+        int idplat = Integer.parseInt(String.valueOf(pltTV.getItems().get(myIndex).getIdplat()));
         
-     String nom = nomplt.getText();      
-  String description = descplt.getText();        
-   String prixText = prixplt.getText();
-    float prix = Float.parseFloat(prixText); 
- CategorieP categorie=catgbox.getValue() ;
- Plat platPourUpdate =new Plat(  idplat,nom,  description,  "taw nrak7ouha ",  prix,  categorie);
-        ServicePlat _servicePalt = new ServicePlat();
- 
-        _servicePalt.modifier(platPourUpdate);
+        String nom = nomplt.getText();
+        String description = descplt.getText();
+        String prixText = prixplt.getText();
+        CategorieP categorie = catgbox.getValue();
+
+        if (estChampValide(nom) && estChampValide(description) && estPrixValide(prixText) && categorie != null) {
+            float prix = Float.parseFloat(prixText);
+            Plat platPourUpdate = new Plat(idplat, nom, description, "taw nrak7ouha", prix, categorie);
+            ServicePlat _servicePlat = new ServicePlat();
+            _servicePlat.modifier(platPourUpdate);
+            PlatTable();
+            afficherAlerte("Succès", "Plat modifié avec succès.", AlertType.INFORMATION);
+        } else {
+            afficherAlerte("Erreur de saisie", "Veuillez remplir tous les champs correctement.", AlertType.ERROR);
+        }
+    } else {
+        afficherAlerte("Erreur de modification", "Veuillez sélectionner un plat à modifier.", AlertType.WARNING);
+    }
+}
+
+
+
+
+@FXML
+private void PlatDeleted(ActionEvent event) throws SQLException {
+    myIndex = pltTV.getSelectionModel().getSelectedIndex();
+    if (myIndex >= 0) {
+        int idplat = Integer.parseInt(String.valueOf(pltTV.getItems().get(myIndex).getIdplat()));
+        ServicePlat _servicePlat = new ServicePlat();
+        _servicePlat.supprimer(idplat);
         PlatTable();
-
+        afficherAlerte("Succès", "Plat supprimé avec succès.", AlertType.INFORMATION);
+    } else {
+        afficherAlerte("Erreur de suppression", "Veuillez sélectionner un plat à supprimer.", AlertType.WARNING);
     }
+}
 
-    @FXML
-    private void PlatDeleted(ActionEvent event) throws SQLException {
-        
-       myIndex = pltTV.getSelectionModel().getSelectedIndex();
-       int idplat = Integer.parseInt(String.valueOf(pltTV.getItems().get(myIndex).getIdplat()));
-       ServicePlat _servicePalt = new ServicePlat();
-       _servicePalt.supprimer(idplat);
-       PlatTable();
-       
-        
-    }
+// Fonction pour afficher une alerte
+private void afficherAlerte(String titre, String contenu, AlertType type) {
+    Alert alert = new Alert(type);
+    alert.setTitle(titre);
+    alert.setHeaderText(contenu);
+    alert.showAndWait();
+}
+
+
     
     public void PlatTable() throws SQLException{
      ServicePlat ServiceEvent= new ServicePlat();

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,9 +46,9 @@ public class AchatFXMLController implements Initializable {
     @FXML
     private TableView<Achat> achatTV;
     @FXML
-    private TableColumn<Achat, User> clientview;
+    private TableColumn<Achat, String> clientview;
     @FXML
-    private TableColumn<Achat, Plat> platview;
+    private TableColumn<Achat, String> platview;
     @FXML
     private TableColumn<Achat, Integer> quantiteview;
     @FXML
@@ -123,14 +124,21 @@ public class AchatFXMLController implements Initializable {
     ObservableList<Achat> obsl = FXCollections.observableArrayList(challengess); 
   
     achatTV.setItems(obsl);
-    clientview.setCellValueFactory(new  PropertyValueFactory<>("user")); 
-    platview.setCellValueFactory(new  PropertyValueFactory<>("plat"));
+  
     Mtotalview.setCellValueFactory(new  PropertyValueFactory<>("montanttotal"));
     quantiteview.setCellValueFactory(new  PropertyValueFactory<>("quantite"));
     dateview.setCellValueFactory(new  PropertyValueFactory<>("date"));
-    typeview.setCellValueFactory(new  PropertyValueFactory<>("typec")); 
+    typeview.setCellValueFactory(new  PropertyValueFactory<>("typec"));
+    clientview.setCellValueFactory(cellData ->
+    {
+       return new SimpleStringProperty(cellData.getValue().getUser().getUsername());
+   });
+    platview.setCellValueFactory(cellData -> {
+    return new SimpleStringProperty(cellData.getValue().getPlat().getNom());
+    });
+    
 
-
+  
 
   achatTV.setRowFactory( tv -> {
      TableRow<Achat> myRow = new TableRow<>();
@@ -140,13 +148,11 @@ public class AchatFXMLController implements Initializable {
         {
            myIndex =  achatTV.getSelectionModel().getSelectedIndex();
             
-     nomclientacht.setText(achatTV.getItems().get(myIndex).getUser().getFirstName());
-     pltach.setText(achatTV.getItems().get(myIndex).getPlat().getNom());
+    // nomclientacht.setText(achatTV.getItems().get(myIndex).getUser().getFirstName());
+    // pltach.setText(achatTV.getItems().get(myIndex).getPlat().getNom());
      mntnach.setText(Float.toString(achatTV.getItems().get(myIndex).getMontanttotal()));
      quntach.setText(Integer.toString(achatTV.getItems().get(myIndex).getQuantite()));
-      dateach.setValue(LocalDate.now());
-
-//dateach.setValue(achatTV.getItems().get(myIndex).getDate().toLocalDate());   
+     dateach.setValue(LocalDate.now());
      typeachbox.setValue(achatTV.getItems().get(myIndex).getTypec());
      
      
@@ -162,7 +168,7 @@ public class AchatFXMLController implements Initializable {
     @FXML
     private void AchatAdd(ActionEvent event) throws SQLException {
         
-     User user = new User();
+    User user = new User();
     user.setIduser(24); 
     user.setUsername("hazem");
     Plat plat = new Plat();

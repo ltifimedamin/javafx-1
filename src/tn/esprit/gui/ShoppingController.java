@@ -17,19 +17,26 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import tn.esprit.entities.Achat;
 import tn.esprit.entities.CategorieP;
 import tn.esprit.entities.Plat;
@@ -81,40 +88,93 @@ public class ShoppingController implements Initializable {
     
     List<Achat> achatsUser= new ArrayList<Achat>();
     TableView<Item> tableView = new TableView<>();
+    @FXML
+    private Button AnnulerAction;
+    
+    int myIndex;
+    int myIndexPannier;  
+  
+
+    private int compteur = 0; 
+
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+   typeCmdbox.getItems().setAll(TypeC.values()); //initialisation COMBOBOX
+
+   AFichagePannier();
+        
+
+        
+      
+panierImg.setOnMouseClicked((MouseEvent event) -> {
+    // Créez un Label pour le prix total
+    Label totalLabel = new Label("Total Price: $" + getTotalePanier(achatsUser));
+    totalLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-weight: bold;");
+    
   
 
-TableColumn<Item, String> nameColumn = new TableColumn<>("Name");
-nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+    // Créez un VBox pour contenir le TableView et le Label
+    VBox vbox = new VBox(tableView, totalLabel);
 
-TableColumn<Item, Double> priceColumn = new TableColumn<>("Price");
-priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-
-tableView.getColumns().addAll(nameColumn, priceColumn);
-        
-
-        
-       typeCmdbox.getItems().setAll(TypeC.values());
-       
-    panierImg.setOnMouseClicked(event -> {
-        System.out.println("List des Achats :" + achatsUser);
-        // This code will be executed when the image is clicked
-       Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("plats Items");
-        dialog.getDialogPane().setContent(tableView);
-        Label totalLabel = new Label("Total Price: $"+ 200);//getTotalePannier
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.FINISH);
-
-        Optional<ButtonType> result = dialog.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-    // Handle the OK button action
-    // You can get the selected items from the TableView if needed
+      Button customButton = new Button("- Quatite");
+        customButton.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+        myIndexPannier = tableView.getSelectionModel().getSelectedIndex();
+        int Quatite = Integer.parseInt(String.valueOf(tableView.getItems().get(myIndexPannier).getQuantite()));
+        Quatite--;
+        AFichagePannier();  
+        System.out.println(".handle()");
         }
-        System.out.println("Mouse clicked on the image");
     });
+    vbox.getChildren().add(customButton);
+    // Créez le Dialog et configurez-le
+    Dialog<ButtonType> dialog = new Dialog<>();
+    dialog.setTitle("Plats Items");
+    dialog.getDialogPane().setContent(vbox);
+
+    Button confirmerButton = new Button("Confirmer");
+    confirmerButton.setStyle("-fx-background-color: #9efd38; -fx-text-fill: white;");
+ 
+
+
+    // Ajoutez le bouton "Annuler" (anciennement "Terminer") avec un style personnalisé (rouge)
+    Button annulerButton = new Button("Annuler");
+    annulerButton.setStyle("-fx-background-color: #f9393e; -fx-text-fill: white;");
+
+    // Ajoutez les boutons "Confirmer" et "Annuler" aux types de boutons du Dialog
+    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+    // Associez les boutons aux actions souhaitées
+    confirmerButton.setOnAction(e -> dialog.setResult(ButtonType.OK));
+    annulerButton.setOnAction(e -> {
+        dialog.close(); // Fermer la fenêtre Plats Items
+    });
+
+    // Définissez le style du fond de la boîte de dialogue en noir
+    dialog.getDialogPane().setStyle("-fx-background-color: black;");
+
+    // Augmentez la largeur et la hauteur de la fenêtre Plats Items
+    dialog.getDialogPane().setMaxWidth(800);
+    dialog.getDialogPane().setMaxHeight(600);
+
+    Optional<ButtonType> result = dialog.showAndWait();
+    if (result.isPresent()) {
+        if (result.get() == ButtonType.OK) {
+            System.out.println("Mouse clicked on Confirmer");
+            // Code à exécuter lorsque le bouton "Confirmer" est cliqué
+        } else if (result.get() == ButtonType.CANCEL) {
+            System.out.println("Mouse clicked on Annuler");
+            // Code à exécuter lorsque le bouton "Annuler" est cliqué
+        }
+    }
+
+  System.out.println("List Des Achats : " + achatsUser);
+  System.out.println("Mouse clicked on the image");
+});
+
         
         try {
             // TODO
@@ -123,9 +183,7 @@ tableView.getColumns().addAll(nameColumn, priceColumn);
             Logger.getLogger(ShoppingController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    int myIndex;    
 
-private int compteur = 0; // Variable pour stocker la valeur actuelle
 
 
 @FXML
@@ -144,9 +202,10 @@ private void AjouterAuPanier(ActionEvent event) throws SQLException {
        Achat achatPourAjouter =new Achat(user,plat,0,Integer.parseInt(quantity_.getText()),new Date(System.currentTimeMillis()),typeCmdbox.getValue());
        achatsUser.add(achatPourAjouter);
        
-       //read indice from nbr du pannier
-      int indice_element= Integer.parseInt(Nbr_Plat_Au_panier.getText()) ; 
-       Item item1 = new Item(nomplt.getText(), prix);
+    //read indice from nbr du pannier
+    //  int indice_element= Integer.parseInt(Nbr_Plat_Au_panier.getText());
+      int quantite_du_plat = Integer.parseInt(quantity_.getText());
+       Item item1 = new Item(nomplt.getText(), prix, quantite_du_plat);
 
   
     increment_Panier_Nbr_Plat();
@@ -160,13 +219,8 @@ private void AjouterAuPanier(ActionEvent event) throws SQLException {
 
 
 
- public void  increment_Panier_Nbr_Plat(){
-    // Incrémente le compteur
-    compteur++;
-    // Met à jour la Label avec la nouvelle valeur
-    Nbr_Plat_Au_panier.setText(Integer.toString(compteur));
-}
-        public void PlatTable() throws SQLException{
+
+    public void PlatTable() throws SQLException{
      ServicePlat ServiceEvent= new ServicePlat();
      ArrayList<Plat> challengess = new ArrayList<>();
               
@@ -183,7 +237,7 @@ private void AjouterAuPanier(ActionEvent event) throws SQLException {
     plat_idView.setCellValueFactory(new  PropertyValueFactory<>("idplat")); 
 
 
- pltTV.setRowFactory( tv -> {
+    pltTV.setRowFactory( tv -> {
      TableRow<Plat> myRow = new TableRow<>();
      myRow.setOnMouseClicked (event ->
      {
@@ -193,7 +247,7 @@ private void AjouterAuPanier(ActionEvent event) throws SQLException {
             
      
 
-     nomplt.setText(pltTV.getItems().get(myIndex).getNom());       
+    nomplt.setText(pltTV.getItems().get(myIndex).getNom());       
         }
      });
         return myRow;
@@ -202,14 +256,65 @@ private void AjouterAuPanier(ActionEvent event) throws SQLException {
     }
         
         public float getTotalePanier(List<Achat> achatsUser){
-            float Total = 0.0f;
+        float Total = 0.0f;
 
         for (Achat A : achatsUser) {
         Plat plat = A.getPlat(); 
         if (plat != null) {
-            Total += plat.getPrix(); 
+            Total += plat.getPrix() * A.getQuantite(); 
         }
     }
     return Total;    
-                }
+    }
+        
+        
+     public void  increment_Panier_Nbr_Plat(){
+  
+    compteur++;
+    
+    Nbr_Plat_Au_panier.setText(Integer.toString(compteur));
+}
+     
+
+
+    @FXML
+    private void Clear_Pannier(ActionEvent event) {
+        
+    compteur = 0;
+
+    tableView.getItems().clear();
+    Nbr_Plat_Au_panier.setText("0");
+    achatsUser.clear();
+    
+        
+        
+    }
+TableColumn<Item, String> nameColumn = new TableColumn<>("Name");
+TableColumn<Item, Double> priceColumn = new TableColumn<>("Price");
+TableColumn<Item, Integer> quantiteColumn = new TableColumn<>("Quantite");
+
+private void AFichagePannier() {
+nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+
+tableView.getColumns().addAll(nameColumn, priceColumn,quantiteColumn);
+
+    tableView.setRowFactory( tv -> {
+     TableRow<Item> myRow = new TableRow<>();
+     myRow.setOnMouseClicked (event ->
+     {
+        if (event.getClickCount() == 1 && (!myRow.isEmpty()))
+        {
+           myIndexPannier =  tableView.getSelectionModel().getSelectedIndex();
+            
+            System.out.println("i Got the Row");
+
+        }
+     });
+        return myRow;
+    });    }
+
 }

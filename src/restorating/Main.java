@@ -81,6 +81,8 @@ public class Main {
         List<Plat> plats = p.recupererByNom(pp.getNom());
             for (Plat plat : plats) {
                 System.out.println("Plat par nom: " + plat);
+               
+
         
               /* TypeC typeARechercher = TypeC.surplace;
 
@@ -94,7 +96,12 @@ public class Main {
                 
 
      
-      }}}
+      }
+    
+    System.out.println("Plat par nom: " + p.recupererByNom("ha"));
+    
+    
+    }}
     
     
 

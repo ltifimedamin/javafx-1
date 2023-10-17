@@ -126,7 +126,7 @@ public class ServicePlat implements IservicePlat<Plat>{
     @Override
     public List<Plat> recupererByNom(String nom) throws SQLException {
          List<Plat> plats = new ArrayList<>();
-    String req = "SELECT * FROM plat WHERE nom = ?";
+    String req = "SELECT * FROM plat WHERE nom REGEXP ?";
     PreparedStatement st = connection.prepareStatement(req);
     st.setString(1, nom);
 
