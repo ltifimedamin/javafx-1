@@ -32,7 +32,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="btnDash" layoutX="10.0" layoutY="146.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../Design/MainForm.css" text="Dashboard">
+                              <Button fx:id="btnDash" layoutX="10.0" layoutY="146.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@MainForm.css" text="Dashboard">
                                  <graphic>
                                     <FontAwesomeIcon fill="WHITE" glyphName="DASHBOARD" size="1.5em" />
                                  </graphic>
@@ -150,6 +150,11 @@
                                           </TableView>
                                        </children>
                                     </AnchorPane>
+                                    <Button fx:id="dashTestButton" layoutX="116.0" layoutY="249.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="190.0" styleClass="nav-btn" stylesheets="@MainForm.css" text="Charts">
+                                       <font>
+                                          <Font name="Arial Narrow Bold Italic" size="18.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                            </children>
