@@ -1,0 +1,84 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 22 oct. 2022, 12:03:40
+    Author     : user
+*/
+
+.login-bg{
+    -fx-background-color:linear-gradient(to bottom right, #6a9ae7, #426fb1);
+    
+}
+.login-card{
+    -fx-background-color:#30363f;
+}
+.textfield-design{
+    -fx-background-color:#e0f0ff;
+    -fx-background-radius:20px;
+    -fx-border-color:#30363f;
+    -fx-border-radius:20px;
+    -fx-text-inner-color:#000;
+    
+}
+.button-design{
+    -fx-background-color:#30363f;
+    -fx-background-radius:40px;
+    -fx-text-fill: #fff;
+    -fx-cursor:hand;
+}
+.button-design:hover{
+    -fx-background-color:#37d20c;
+
+}
+.button-design2{
+    -fx-background-color:#30363f;
+    -fx-background-radius:40px;
+    -fx-text-fill: #fff;
+    -fx-cursor:hand;
+}
+.button-designS{
+    -fx-background-color:#30363f;
+    -fx-background-radius:40px;
+    -fx-text-fill: #fff;
+    -fx-cursor:hand;
+}
+.button-designM{
+    -fx-background-color:#30363f;
+    -fx-background-radius:40px;
+    -fx-text-fill: #fff;
+    -fx-cursor:hand;
+}
+.button-design2:hover{
+    -fx-background-color:#6a9ae7;
+}
+.button-designS:hover{
+    -fx-background-color:#fa0000;
+}
+.button-designM:hover{
+    -fx-background-color:#fde400;
+}
+.hypertext-design{
+    -fx-text-fill:#fff;
+    -fx-border-color:none;
+    -fx-border-width:0px;
+    
+}
+.marco{
+    -fx-text-fill:#6a9ae7;
+    -fx-cursor:hand;
+    
+}
+.button-designB{
+    -fx-background-color:#30363f;
+    -fx-background-radius:40px;
+    -fx-text-fill: #fff;
+    -fx-cursor:hand;
+}
+button-designB:hover{
+    -fx-background-color:#6a9ae7;
+}
+.label-design{
+
+}

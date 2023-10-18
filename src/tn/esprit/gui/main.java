@@ -27,6 +27,7 @@ public class main extends Application {
         
       //addevnt
       //ParticpeEvent
+      //ImgWithEvent
        Parent root = FXMLLoader.load(getClass().getResource("addevnt.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

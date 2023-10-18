@@ -9,8 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javax.swing.JFileChooser;
 import tn.esprit.entities.Evennement;
@@ -79,7 +82,8 @@ public class AddevntController implements Initializable {
     private TableColumn<Evennement, String> lieu_eventView;
     @FXML
     private TableColumn<Evennement,Integer > id_eventView1;
-
+    
+    Eventservice e = new Eventservice();
 
     /**
      * Initializes the controller class.
@@ -88,6 +92,12 @@ public class AddevntController implements Initializable {
     int    myIndex;
     @FXML
     private Button Participantajoouter;
+    @FXML
+    private TextField TXTimg;
+    @FXML
+    private ImageView lbl_image;
+    @FXML
+    private Button chercher;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -98,7 +108,22 @@ public class AddevntController implements Initializable {
     @FXML
     private void ADDimage(ActionEvent event) {
         
-      
+          JFileChooser  chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        TXTimg.setText(filename);
+        String path= TXTimg.getText();
+        System.out.println("PATH :"  +path);
+       // Image getAbsolutePath = null;
+       // ImageIcon icon = new ImageIcon(filename);
+
+    
+    
+             Image imn = new Image(
+              "file:/" +path );
+            lbl_image.setImage(imn);
+//       // System.out.println("file:/" + eq.getImage_eq());
         
         
         
@@ -111,19 +136,20 @@ public class AddevntController implements Initializable {
      LocalDate date;
      String  description;
      String adresse;    
-     String img="Haw Jitek";   
+     String img;   
      String lieu ;
     titre =recTitre.getText();
     description= recDiscription.getText();
     adresse= recAdresse.getText();
     date= recDate.getValue();
     lieu =recLieu.getText();
+    img =TXTimg.getText();
  
     Evennement evennementPourAjouter = new  Evennement( titre, date,  description, img,  adresse, lieu);
     Eventservice Serviceevent = new Eventservice();
 
-        Serviceevent.ajouter(evennementPourAjouter);
-        EventTable();
+    Serviceevent.ajouter(evennementPourAjouter);
+    EventTable();
         
     }
 
@@ -136,14 +162,16 @@ public class AddevntController implements Initializable {
      LocalDate date;
      String  description;
      String adresse;    
-     String img="Haw Jitek";   
+     String img;   
      String lieu ;
     titre =recTitre.getText();
     description= recDiscription.getText();
     adresse= recAdresse.getText();
     date= recDate.getValue();
-    lieu =recLieu.getText();
-        Evennement evennementPourUpdate = new  Evennement( idEvent,titre, date,  description, img,  adresse, lieu);
+    lieu =recLieu.getText(); 
+    img =TXTimg.getText();
+
+    Evennement evennementPourUpdate = new  Evennement( idEvent,titre, date,  description, img,  adresse, lieu);
     Eventservice Serviceevent = new Eventservice();
     Serviceevent.modifier(evennementPourUpdate);
     EventTable();
@@ -176,14 +204,14 @@ public class AddevntController implements Initializable {
     ObservableList<Evennement> obsl = FXCollections.observableArrayList(challengess); 
   
     EventTable.setItems(obsl);
-    id_eventView1.setCellValueFactory(new  PropertyValueFactory<>("id")); 
+    
     titre_eventView.setCellValueFactory(new  PropertyValueFactory<>("titre"));
-    date_eventView.setCellValueFactory(new  PropertyValueFactory<>("date"));
+    date_eventView.setCellValueFactory(new  PropertyValueFactory<>("date")); 
     description_eventView.setCellValueFactory(new  PropertyValueFactory<>("description"));
-    adresse_eventView.setCellValueFactory(new  PropertyValueFactory<>("adresse")); 
+     id_eventView1.setCellValueFactory(new  PropertyValueFactory<>("id"));
+    adresse_eventView.setCellValueFactory(new  PropertyValueFactory<>("adresse"));
     lieu_eventView.setCellValueFactory(new  PropertyValueFactory<>("lieu"));
-
- EventTable.setRowFactory( tv -> {
+    EventTable.setRowFactory( tv -> {
      TableRow<Evennement> myRow = new TableRow<>();
      myRow.setOnMouseClicked (event ->
      {
@@ -265,5 +293,38 @@ public class AddevntController implements Initializable {
 
         return true;
     }*/
+     ObservableList<Evennement> eventsData = FXCollections.observableArrayList();
+    @FXML
+    private void chercher(ActionEvent event) throws SQLException {
+        List<Evennement> events = null;
+        String recherche = recChercher.getText();
+         
+            events = recupererBytitre(recherche);
+         
+              if (events != null && !events.isEmpty()) {
+            eventsData.setAll(events);
+            EventTable.setItems(eventsData);
+        } else {
+            afficherAlerte("Aucun résultat", "Aucun résultat trouvé pour la recherche.", Alert.AlertType.INFORMATION);
+        }
+        }
     
+    private void afficherAlerte(String titre, String contenu, Alert.AlertType type) {
+    Alert alert = new Alert(type);
+    alert.setTitle(titre);
+    alert.setHeaderText(contenu);
+    alert.showAndWait();
 }
+    
+    
+        private List<Evennement> recupererBytitre(String titre) throws SQLException {
+        return e.recupererBytitre(titre);
+    }
+    }
+    
+
+
+
+    
+    
+

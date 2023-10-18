@@ -60,7 +60,7 @@ public class Eventservice implements IserviceEvenement<Evennement>{
 
     @Override
     public void modifier(Evennement event) {
-       String req="UPDATE evennement SET `titre` = ?,`date` = ?, `description` = ?,  `img` = ?, `lieu` = ? WHERE `idevent`=" + event.getId();
+       String req="UPDATE evennement SET `titre` = ?,`date` = ?, `description` = ?,`img` = ?, `adresse`= ? , `lieu` = ? WHERE `idevent`=" + event.getId();
          try {
             
                PreparedStatement pre= cnx.prepareStatement(req);
@@ -68,8 +68,9 @@ public class Eventservice implements IserviceEvenement<Evennement>{
             pre.setString(1,event.getTitre() );
             pre.setDate(2, Date.valueOf(event.getDate()));
             pre.setString(3, event.getDescription());
-            pre.setString(4, event.getAdresse());
-            pre.setString(5, event.getLieu());
+            pre.setString(4, event.getImg());
+            pre.setString(5, event.getAdresse());
+            pre.setString(6, event.getLieu());
             
                
             pre.executeUpdate();
@@ -144,15 +145,40 @@ public class Eventservice implements IserviceEvenement<Evennement>{
         
                 
     }
+    
+    
+   /* @Override
+    public List<Plat> recupererByNom(String nom) throws SQLException {
+         List<Plat> plats = new ArrayList<>();
+    String req = "SELECT * FROM plat WHERE nom REGEXP ?";
+    PreparedStatement st = connection.prepareStatement(req);
+    st.setString(1, nom);
+
+    ResultSet rs = st.executeQuery();
+
+    while (rs.next()) {
+        Plat plt = new Plat();
+        plt.setIdplat(rs.getInt("idplat"));
+        plt.setNom(rs.getString("nom"));
+        plt.setDescription(rs.getString("description"));
+        plt.setImage(rs.getString("image"));
+        plt.setPrix(rs.getFloat("prix"));
+        plt.setCategorie(CategorieP.valueOf(rs.getString("categorie")));
+
+        plats.add(plt);
+    }
+
+    return plats;
+    }*/
 
     @Override
-    public List<Evennement> recupererBytitre(String titre) {
+    public List<Evennement> recupererBytitre(String titre){
           List<Evennement>  listE=new ArrayList<>();
-          String req = "SELECT * FROM  evennement WHERE titre = ?";
+          String req = "SELECT * FROM  evennement WHERE titre REGEXP ?";
           try {
-              PreparedStatement pre= cnx.prepareStatement(req);
-              pre.setString(1,titre );
-              ResultSet rs = ste.executeQuery(req);
+                 PreparedStatement st = cnx.prepareStatement(req);
+                     st.setString(1, titre);
+              ResultSet rs = st.executeQuery();
                 while(rs.next()){
                  listE.add(
                          
@@ -164,7 +190,6 @@ public class Eventservice implements IserviceEvenement<Evennement>{
                     rs.getString("img"),
                     rs.getString("adresse"),
                     rs.getString("lieu")
-            
                 ));
               
             }

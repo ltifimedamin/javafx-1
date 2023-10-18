@@ -102,57 +102,19 @@ public class AddparticipantController implements Initializable {
     @FXML
     private void ModiferParticipant(ActionEvent event) {
        int numero = parseInt(recRecherche.getText());
+       LocalDate Date;
        Evennement selectedEvent= new Evennement();
-       User userConnecter = new User(); 
+       User userConnecter = new User();
+       Date= recDateparticipant.getValue();
         int Numero= parseInt(recNumero.getText());
-       Participant particperAEvent=new Participant(LocalDate.now(), Numero, userConnecter ,selectedEvent);
+        
+       Participant particperAEvent=new Participant(Date, Numero, userConnecter ,selectedEvent);
         Participationservices participation=new Participationservices();
         participation.modifier(particperAEvent,numero);
            TableviewParticipant ();
         
-        /////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-         /*myIndex = EventTable.getSelectionModel().getSelectedIndex();
-       int idEvent = Integer.parseInt(String.valueOf(EventTable.getItems().get(myIndex).getId()));
-        
-     String titre;
-     LocalDate date;
-     String  description;
-     String adresse;    
-     String img="Haw Jitek";   
-     String lieu ;
-    titre =recTitre.getText();
-    description= recDiscription.getText();
-    adresse= recAdresse.getText();
-    date= recDate.getValue();
-    lieu =recLieu.getText();
-        Evennement evennementPourUpdate = new  Evennement( idEvent,titre, date,  description, img,  adresse, lieu);
-    Eventservice Serviceevent = new Eventservice();
-    Serviceevent.modifier(evennementPourUpdate);
-    EventTable();
-*/
-         
-     /* myIndex =   TableviewParticipant.getSelectionModel().getSelectedIndex();
-         int Numero = Integer.parseInt(String.valueOf( TableviewParticipant.getItems().get(myIndex).getNumero()));    
-        
-            LocalDate date;
-           
-            date=recDateparticipant.getValue();
-            Numero= parseInt(recNumero.getText());
-               
-       Evennement selectedEvent= new Evennement();
-       selectedEvent.setId());
-       User userConnecter = new User(); 
-       userConnecter.setIduser(1);
        
-            
-            
-            
-             Participant particperAEvent=new Participant(LocalDate.now(),Numero , userConnecter ,selectedEvent);
-             Participationservices participation=new Participationservices();
-              participation.modifier(particperAEvent);
-                 TableviewParticipant ();
-  */          
+        
         
         
         

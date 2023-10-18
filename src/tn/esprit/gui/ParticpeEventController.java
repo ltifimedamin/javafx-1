@@ -87,7 +87,7 @@ public class ParticpeEventController implements Initializable {
     private void annulerParticipation(ActionEvent event) {
         
           myIndex =   EventTable.getSelectionModel().getSelectedIndex();
-         //int numero = Integer.parseInt(String.valueOf( EventTable.getItems().get(myIndex).));
+         
         User userConnecter = new User(); 
        userConnecter.setIduser(1);
 
@@ -111,10 +111,10 @@ public class ParticpeEventController implements Initializable {
     ObservableList<Evennement> obsl = FXCollections.observableArrayList(challengess); 
   
     EventTable.setItems(obsl);
-    id_eventView1.setCellValueFactory(new  PropertyValueFactory<>("id")); 
     titre_eventView.setCellValueFactory(new  PropertyValueFactory<>("titre"));
     date_eventView.setCellValueFactory(new  PropertyValueFactory<>("date"));
     description_eventView.setCellValueFactory(new  PropertyValueFactory<>("description"));
+     id_eventView1.setCellValueFactory(new  PropertyValueFactory<>("id")); 
     adresse_eventView.setCellValueFactory(new  PropertyValueFactory<>("adresse")); 
     lieu_eventView.setCellValueFactory(new  PropertyValueFactory<>("lieu"));
 

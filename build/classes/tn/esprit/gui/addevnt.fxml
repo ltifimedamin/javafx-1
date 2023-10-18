@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="780.0" prefWidth="1000.0" style="-fx-background-color: #303030; -fx-border-color: #fea347; -fx-border-image-width: 0px 0px 2px 0px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.gui.AddevntController">
@@ -29,13 +30,16 @@
       <TextField fx:id="recAdresse" layoutX="173.0" layoutY="619.0" />
       <DatePicker fx:id="recDate" layoutX="170.0" layoutY="491.0" onAction="#displayDateD" />
       <Label layoutX="74.0" layoutY="669.0" text="Image" textFill="#fea347" />
-      <Button fx:id="recImage" layoutX="174.0" layoutY="665.0" mnemonicParsing="false" onAction="#ADDimage" prefHeight="26.0" prefWidth="159.0" style="-fx-background-color: #fea347;" text="choisir un image " />
+      <Button fx:id="recImage" layoutX="174.0" layoutY="705.0" mnemonicParsing="false" onAction="#ADDimage" prefHeight="26.0" prefWidth="159.0" style="-fx-background-color: #fea347;" text="choisir un image " />
       <Button fx:id="btnAjouter" layoutX="698.0" layoutY="443.0" mnemonicParsing="false" onAction="#addevent" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Ajouter" textFill="#151515" />
       <Button fx:id="btnmodifier" layoutX="698.0" layoutY="504.0" mnemonicParsing="false" onAction="#Modifierevent" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Modifier" />
       <Button fx:id="btnSupprimer" layoutX="698.0" layoutY="568.0" mnemonicParsing="false" onAction="#supprimerevent" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Supprimer" />
       <TextField fx:id="recChercher" layoutX="419.0" layoutY="618.0" prefHeight="26.0" prefWidth="457.0" promptText="Chercher evennement ........" />
       <Label layoutX="77.0" layoutY="586.0" text="Lieu" textFill="#fea347" />
       <TextField fx:id="recLieu" layoutX="170.0" layoutY="581.0" />
-      <Button fx:id="Participantajoouter" layoutX="698.0" layoutY="665.0" mnemonicParsing="false" onAction="#addParticipant" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="participer" />
+      <Button fx:id="Participantajoouter" layoutX="698.0" layoutY="718.0" mnemonicParsing="false" onAction="#addParticipant" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="participer" />
+      <TextField fx:id="TXTimg" editable="false" layoutX="171.0" layoutY="666.0" promptText="Url Img" />
+      <ImageView fx:id="lbl_image" fitHeight="150.0" fitWidth="200.0" layoutX="419.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="chercher" layoutX="698.0" layoutY="665.0" mnemonicParsing="false" onAction="#chercher" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Recherche" />
    </children>
 </AnchorPane>
