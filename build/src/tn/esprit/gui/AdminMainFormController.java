@@ -6,7 +6,13 @@
 package tn.esprit.gui;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -24,6 +31,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import tn.esprit.services.ServiceUser;
 import tn.esprit.entities.User;
 import tn.esprit.entities.UserRole;
+import tn.esprit.utils.Datasource;
 
 /**
  * FXML Controller class
@@ -90,6 +98,9 @@ public class AdminMainFormController implements Initializable {
      */
      private ServiceUser userService;
     private int selectedUserIndex = -1;
+    private Connection con;
+    private PreparedStatement pre;
+    private Statement ste;
     @FXML
     
     public void loadUserData() {
@@ -179,6 +190,21 @@ public class AdminMainFormController implements Initializable {
                                 } else {
                                              type = UserRole.ADMIN;
 }      
+          if (!isValidEmail(email)) {
+        showAlert("Erreur d'inscription", "L'adresse e-mail n'est pas valide.");
+        return;
+    }
+          if (isUsernameTaken(username)) {
+            showAlert("Erreur d'inscription", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
+            usernamedashfield.clear();
+            
+            return;
+        }
+          if (!isValidPassword(password)) {
+        showAlert("Erreur d'inscription", "Le mot de passe doit avoir au moins 8 caractères et contenir au moins une majuscule.");
+        passwordDashField.clear();
+        return;
+    }
 
         // Créer un nouvel utilisateur
          // Créer un nouvel utilisateur avec les données du formulaire
@@ -215,7 +241,7 @@ public class AdminMainFormController implements Initializable {
         if (selectedUserIndex >= 0) {
             // Get the selected user from the TableView
             User selectedUser = userTableView.getSelectionModel().getSelectedItem();
-
+            
             // Update the selected user's data with the data from text fields and ComboBox
             selectedUser.setUsername(usernamedashfield.getText());
             selectedUser.setEmail(emailDashField.getText());
@@ -226,7 +252,13 @@ public class AdminMainFormController implements Initializable {
             selectedUser.setAddress(AddressDashField.getText());
             selectedUser.setRole(type);
 
+             if (validateUserInput()) {
+            // Call the service to update the user
+            userService.modifier(selectedUser);
 
+            // Reload the user data in the TableView
+            loadUserData();
+             
 
             // Call the service to update the user
             userService.modifier(selectedUser);
@@ -239,6 +271,7 @@ public class AdminMainFormController implements Initializable {
         successAlert.setHeaderText("User Updated Successfully");
         successAlert.setContentText("The user has been updated successfully.");
         successAlert.showAndWait();
+             }
         } else {
             // Show an alert that no user is selected for updating
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -267,13 +300,32 @@ public class AdminMainFormController implements Initializable {
     User selectedUser = userTableView.getSelectionModel().getSelectedItem();
 
     if (selectedUser != null) {
-        // Remove the selected user from the TableView
-        userTableView.getItems().remove(selectedUser);
+        // Create a confirmation alert
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setHeaderText("Confirm Deletion");
+        confirmationAlert.setContentText("Are you sure you want to delete this user?");
 
-        // Delete the user from the database
-        userService.supprimer(selectedUser.getIduser()); // Use the ID to delete the user
+        // Show the confirmation dialog and wait for the user's response
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // User confirmed the deletion, proceed with deleting the user
+
+            // Remove the selected user from the TableView
+            userTableView.getItems().remove(selectedUser);
+
+            // Delete the user from the database
+            userService.supprimer(selectedUser.getIduser()); // Use the ID to delete the user
+             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Success");
+            successAlert.setHeaderText("User Deleted Successfully");
+            successAlert.setContentText("The user has been deleted successfully.");
+            successAlert.showAndWait();
+        }
     }
-    }
+}
+
    @FXML
 private void clearFields(ActionEvent event) {
     firstNameFielddasha.clear();
@@ -285,6 +337,75 @@ private void clearFields(ActionEvent event) {
     confirPasswordDashField.clear();
     AddressDashField.clear();
     roleDashComboBox.getSelectionModel().clearSelection(); // Clear the selected item in the ComboBox
+}
+
+    private boolean isUsernameTaken(String username) {
+        try {
+            con = Datasource.getInstance().getCnx(); // Use the connection from Datasource
+            String query = "SELECT * FROM user WHERE username = ?";
+            pre = con.prepareStatement(query);
+            pre.setString(1, username);
+            ResultSet rs = pre.executeQuery();
+            return rs.next(); // Return true if username exists in the database, false otherwise
+        } catch (SQLException ex) {
+            showAlert("Erreur d'inscription", "Erreur lors de la vérification de l'unicité du nom d'utilisateur.");
+            return false;
+        }
+    }
+    private boolean isValidPassword(String password) {
+    // Check if the password is at least 8 characters long
+    if (password.length() < 8) {
+        return false;
+    }
+
+    // Check if the password contains at least one uppercase letter
+    if (!password.matches(".*[A-Z].*")) {
+        return false;
+    }
+
+    return true;
+}
+    private boolean validateUserInput() {
+    String username = usernamedashfield.getText();
+    String password = passwordDashField.getText();
+    String confirmPassword = confirPasswordDashField.getText();
+    String firstName = firstNameFielddasha.getText();
+    String lastName = lastNameFielddash.getText();
+    String email = emailDashField.getText();
+    String telephone = numberDashField.getText();
+    String address = AddressDashField.getText();
+    String role = roleDashComboBox.getValue().toString();
+
+    // Vérifier si les mots de passe correspondent
+    if (!password.equals(confirmPassword)) {
+        showAlert("Erreur de saisie", "Les mots de passe ne correspondent pas.");
+        return false;
+    }
+
+    if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
+        firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || role == null) {
+        showAlert("Erreur de saisie", "Tous les champs obligatoires doivent être renseignés.");
+        return false;
+    }
+
+    if (!isValidEmail(email)) {
+        showAlert("Erreur de saisie", "L'adresse e-mail n'est pas valide.");
+        return false;
+    }
+
+    if (isUsernameTaken(username)) {
+        showAlert("Erreur de saisie", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
+        usernamedashfield.clear();
+        return false;
+    }
+
+    if (!isValidPassword(password)) {
+        showAlert("Erreur de saisie", "Le mot de passe doit avoir au moins 8 caractères et contenir au moins une majuscule.");
+        passwordDashField.clear();
+        return false;
+    }
+
+    return true; // La saisie est valide
 }
 
 }

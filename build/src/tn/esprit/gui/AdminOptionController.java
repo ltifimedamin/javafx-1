@@ -5,11 +5,16 @@
  */
 package tn.esprit.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -26,9 +31,35 @@ public class AdminOptionController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
+     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        // Set the actions for the buttons.
+        frontButton.setOnAction(event -> loadFrontOfficePage());
+        backButton.setOnAction(event -> loadBackOfficePage());
+    }
+
+    private void loadFrontOfficePage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadBackOfficePage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminMainForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

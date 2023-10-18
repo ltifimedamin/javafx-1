@@ -50,7 +50,7 @@
                      <children>
                         <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="83.0" layoutY="65.0" size="5em" />
                         <Label layoutX="21.0" layoutY="110.0" text="Username:" textFill="WHITE" />
-                        <Label fx:id="nav_username" layoutX="83.0" layoutY="109.0" prefHeight="17.0" prefWidth="117.0" text="user" textFill="WHITE">
+                        <Label fx:id="nav_username" layoutX="111.0" layoutY="107.0" prefHeight="19.0" prefWidth="35.0" text="user" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>

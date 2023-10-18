@@ -6,6 +6,11 @@
 package tn.esprit.gui;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +25,7 @@ import javafx.stage.Stage;
 import tn.esprit.entities.User;
 import tn.esprit.services.IServiceUser;
 import tn.esprit.services.ServiceUser;
+import tn.esprit.utils.Datasource;
 import tn.esprit.utils.Session;
 
 /**
@@ -49,7 +55,9 @@ public class ProfilController implements Initializable {
     private PasswordField ConfirmPasswordProfilField;
     @FXML
     private PasswordField oldPasswordProfilField;
-    
+     private Connection con;
+    private PreparedStatement pre;
+    private Statement ste;
     
     
     private ServiceUser userService;
@@ -95,7 +103,22 @@ public class ProfilController implements Initializable {
     // The old password matches or is not provided, proceed with updating user data
         
     // Update the user object with the new data
-    
+     if (newUserName.isEmpty() ||  newFirstName.isEmpty() ||
+        newLastName.isEmpty() || newEmail.isEmpty()   ) {
+        showAlert("Erreur de modification", "Tous les champs obligatoires doivent être renseignés.");
+         
+        return;
+    }
+         if (!isValidEmail(newEmail)) {
+        showAlert("Erreur de modification", "L'adresse e-mail n'est pas valide.");
+        return;
+    }
+          if (isUsernameTaken(newUserName)) {
+            showAlert("Erreur de modification", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
+            usernameProfilField.clear();
+            
+            return;
+        }
 
     currentUser.setFirstName(newFirstName);
     currentUser.setLastName(newLastName);
@@ -109,6 +132,13 @@ public class ProfilController implements Initializable {
         // Check if the new password and confirm password match
         if (newPassword.equals(confirmPassword)) {
           //   Set the new password
+          if (!isValidPassword(newPassword)) {
+        showAlert("Erreur de modification", "Le mot de passe doit avoir au moins 8 caractères et contenir au moins une majuscule.");
+        oldPasswordProfilField.clear();
+        newPasswordProfilField.clear();
+        ConfirmPasswordProfilField.clear();
+        return;
+    }
             currentUser.setPassword(newPassword);
         } else {
             showAlert("Error", "New password and confirm password do not match.");
@@ -135,5 +165,38 @@ public class ProfilController implements Initializable {
                alert.setHeaderText(null);
            alert.setContentText(content);
             alert.showAndWait();
+}
+        private boolean isValidEmail(String email) {
+    // Vous pouvez utiliser une expression régulière (regex) pour valider l'adresse e-mail.
+    // Voici un exemple simple de regex pour une adresse e-mail :
+    String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+    return email.matches(emailRegex);
+}
+    private boolean isUsernameTaken(String username) {
+        try {
+            con = Datasource.getInstance().getCnx(); // Use the connection from Datasource
+            String query = "SELECT * FROM user WHERE username = ?";
+            pre = con.prepareStatement(query);
+            pre.setString(1, username);
+            ResultSet rs = pre.executeQuery();
+            return rs.next(); // Return true if username exists in the database, false otherwise
+        } catch (SQLException ex) {
+            showAlert("Erreur d'inscription", "Erreur lors de la vérification de l'unicité du nom d'utilisateur.");
+            return false;
+        }
+    }
+    private boolean isValidPassword(String password) {
+    // Check if the password is at least 8 characters long
+    if (password.length() < 8) {
+        return false;
+    }
+
+    // Check if the password contains at least one uppercase letter
+    if (!password.matches(".*[A-Z].*")) {
+        return false;
+    }
+
+    return true;
 }
 }

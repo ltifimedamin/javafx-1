@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tn.esprit.entities.UserRole;
 import tn.esprit.utils.Session;
 
 
@@ -79,9 +80,15 @@ public class LoginController implements Initializable {
             // Authentification réussie
             
             Session.setCurrentUser(user);
-            
-            showAlert("Authentification réussie", "Bienvenue, " + user.getUsername());
-             loadHomePage(); // user is the authenticated user
+            if (user.getRole() == UserRole.ADMIN) {
+            loadAdminOptionPage();
+        } else {
+            loadHomePage();
+             showAlert("Authentification réussie", "Bienvenue, " + user.getUsername());
+             loadHomePage();
+        }
+           
+              // user is the authenticated user
         // Redirigez l'utilisateur vers la page d'accueil ou effectuez d'autres actions nécessaires
             // Redirigez l'utilisateur vers la page d'accueil ou effectuez d'autres actions nécessaires
         } else {
@@ -119,6 +126,17 @@ public class LoginController implements Initializable {
        // HomeController homeController = loader.getController();
       //  homeController.initUser(user); // Initialisation des données de l'utilisateur
         Stage stage = (Stage) loginButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+    private void loadAdminOptionPage() {
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AdminOption.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
     } catch (IOException e) {
