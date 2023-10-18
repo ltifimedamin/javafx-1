@@ -33,10 +33,7 @@ import tn.esprit.services.IserviceEvenement;
  */
 public class ImgWithEventController implements Initializable {
 
-    @FXML
-    private TextField chercherMagasin;
-    @FXML
-    private ComboBox<?> comboCat;
+   
     @FXML
     private ScrollPane scroll;
     @FXML
@@ -105,9 +102,7 @@ public class ImgWithEventController implements Initializable {
                 column = 0;
                 row++;
             }
-
-            grid.add(anchorPane, column++, row); //(child,column,row)
-            //set grid width
+            grid.add(anchorPane, column++, row); 
             grid.setMinWidth(Region.USE_COMPUTED_SIZE);
             grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
             grid.setMaxWidth(Region.USE_PREF_SIZE);

@@ -4,14 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/ItemEquipementController.java</file>
-            <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/services/IserviceEvenement.java</file>
-            <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/itemEquipement.fxml</file>
             <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/restorating/Main.java</file>
             <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/AddevntController.java</file>
-            <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/AddparticipantController.java</file>
-            <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/services/Participationservices.java</file>
             <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/services/Eventservice.java</file>
-            <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/entities/Participant.java</file>
+            <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/services/Participationservices.java</file>
+            <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/AddparticipantController.java</file>
             <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/ImgWithEventController.java</file>
             <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/main.java</file>
             <file>file:/C:/Users/Med%20Iheb/Desktop/restoratings/src/tn/esprit/gui/ParticpeEventController.java</file>

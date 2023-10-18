@@ -94,7 +94,6 @@ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         this.priceLable.setText(formattedString);
         this.titrelabel.setText(eq.getTitre());
         this.descriptionlabel.setText(eq.getDescription());
-//        this.priceLable.setStrikethrough(true);
         this.IdItem.setText(String.valueOf(eq.getId()));
 
 

@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -115,8 +116,7 @@ public class AddevntController implements Initializable {
         TXTimg.setText(filename);
         String path= TXTimg.getText();
         System.out.println("PATH :"  +path);
-       // Image getAbsolutePath = null;
-       // ImageIcon icon = new ImageIcon(filename);
+       
 
     
     
@@ -132,6 +132,7 @@ public class AddevntController implements Initializable {
  
     @FXML
     private void addevent(ActionEvent event) {
+      if (isInputValid()) {  
      String titre;
      LocalDate date;
      String  description;
@@ -149,12 +150,14 @@ public class AddevntController implements Initializable {
     Eventservice Serviceevent = new Eventservice();
 
     Serviceevent.ajouter(evennementPourAjouter);
+     showAlert("AJOUTER AVEC SUCCES", "AJOUTER AVEC SUCCES");
     EventTable();
-        
+       }  
     }
 
     @FXML
     private void Modifierevent(ActionEvent event) {
+         if (isInputValid()) { 
         myIndex = EventTable.getSelectionModel().getSelectedIndex();
        int idEvent = Integer.parseInt(String.valueOf(EventTable.getItems().get(myIndex).getId()));
         
@@ -174,8 +177,9 @@ public class AddevntController implements Initializable {
     Evennement evennementPourUpdate = new  Evennement( idEvent,titre, date,  description, img,  adresse, lieu);
     Eventservice Serviceevent = new Eventservice();
     Serviceevent.modifier(evennementPourUpdate);
+     showAlert("MODIFIER AVEC SUCCES", "MODIFIER AVEC SUCCES");
     EventTable();
-        
+         } 
     }
 
     @FXML
@@ -259,40 +263,7 @@ public class AddevntController implements Initializable {
            
        
     }
-    /* private boolean controleDeSaisie() {
-
-        if (recTitre.getText().isEmpty()) {
-            AlertUtils.makeInformation("titre ne doit pas etre vide");
-            return false;
-        }
-
-        if (recDiscription.getText().isEmpty()) {
-            AlertUtils.makeInformation("description ne doit pas etre vide");
-            return false;
-        }
-
-        if (recDate.getValue() == null) {
-            AlertUtils.makeInformation("Choisir une date pour date");
-            return false;
-        }
- if (recAdresse.getText().isEmpty()) {
-            AlertUtils.makeInformation("description ne doit pas etre vide");
-            return false;
-        }
-         
-        }
-        if (recImage == null) {
-            AlertUtils.makeInformation("Veuillez choisir une image");
-            return false;
-        }
-
-        if (recLieu.getText().isEmpty()) {
-            AlertUtils.makeInformation("lieu ne doit pas etre vide");
-            return false;
-        }
-
-        return true;
-    }*/
+    
      ObservableList<Evennement> eventsData = FXCollections.observableArrayList();
     @FXML
     private void chercher(ActionEvent event) throws SQLException {
@@ -320,9 +291,30 @@ public class AddevntController implements Initializable {
         private List<Evennement> recupererBytitre(String titre) throws SQLException {
         return e.recupererBytitre(titre);
     }
+
+    private boolean isInputValid() {
+          if (recTitre.getText().isEmpty() || recDiscription.getText().isEmpty() || 
+        recDate.getValue() == null || recAdresse.getText().isEmpty() || 
+        TXTimg.getText().isEmpty() || recLieu.getText().isEmpty()) {
+       
+        showAlert("Champs vides", "Tous les champs doivent être remplis.");
+        return false;
     }
     
+   
+    
+    return true;
+    }
 
+    private void showAlert(String champs_vides, String tous_les_champs_doivent_être_remplis) {
+       Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle( champs_vides);
+    alert.setHeaderText(null);
+    alert.setContentText(tous_les_champs_doivent_être_remplis);
+    alert.showAndWait();
+    }
+    }
+    
 
 
     

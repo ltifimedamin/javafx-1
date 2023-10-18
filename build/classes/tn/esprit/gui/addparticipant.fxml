@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.gui.AddparticipantController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #fea347;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.gui.AddparticipantController">
    <children>
       <TableView fx:id="TableviewParticipant" layoutX="114.0" layoutY="65.0" prefHeight="294.0" prefWidth="607.0">
         <columns>
@@ -20,11 +20,11 @@
       </TableView>
       <Label layoutX="130.0" layoutY="441.0" text="Date" />
       <Label layoutX="130.0" layoutY="503.0" text="Numero" />
-      <Button fx:id="Participantsupprimer" layoutX="613.0" layoutY="541.0" mnemonicParsing="false" onAction="#supprimerParicipant" prefHeight="26.0" prefWidth="167.0" text="Supprimer" />
-      <Button fx:id="Modifier" layoutX="613.0" layoutY="486.0" mnemonicParsing="false" onAction="#ModiferParticipant" prefHeight="26.0" prefWidth="167.0" text="Modifier" />
+      <Button fx:id="Participantsupprimer" layoutX="613.0" layoutY="541.0" mnemonicParsing="false" onAction="#supprimerParicipant" prefHeight="26.0" prefWidth="167.0" style="-fx-background-color: #303030;" text="Supprimer" textFill="#fcf9f9" />
+      <Button fx:id="Modifier" layoutX="613.0" layoutY="486.0" mnemonicParsing="false" onAction="#ModiferParticipant" prefHeight="26.0" prefWidth="167.0" style="-fx-background-color: #303030;" text="Modifier" textFill="#fcf9f9" />
       <DatePicker fx:id="recDateparticipant" layoutX="216.0" layoutY="437.0" />
       <TextField fx:id="recNumero" layoutX="216.0" layoutY="500.0" />
       <TextField fx:id="recRecherche" layoutX="216.0" layoutY="567.0" visible="false" />
-      <Button fx:id="retourajouterevnt" layoutX="209.0" layoutY="577.0" mnemonicParsing="false" onAction="#retouraddEvnt" prefHeight="30.0" prefWidth="135.0" text="Retour" />
+      <Button fx:id="retourajouterevnt" layoutX="209.0" layoutY="577.0" mnemonicParsing="false" onAction="#retouraddEvnt" prefHeight="30.0" prefWidth="135.0" style="-fx-background-color: #303030;" text="Retour" textFill="#f4f1f1" />
    </children>
 </AnchorPane>
