@@ -113,12 +113,23 @@ public class ProfilController implements Initializable {
         showAlert("Erreur de modification", "L'adresse e-mail n'est pas valide.");
         return;
     }
-          if (isUsernameTaken(newUserName)) {
-            showAlert("Erreur de modification", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
-            usernameProfilField.clear();
-            
-            return;
-        }
+        if (newFirstName.equals(currentUser.getFirstName()) &&
+    newUserName.equals(currentUser.getUsername()) &&
+    newLastName.equals(currentUser.getLastName()) &&
+    newEmail.equals(currentUser.getEmail()) &&
+    newAddress.equals(currentUser.getAddress()) &&
+    newTel.equals(currentUser.getTel()) &&
+    (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty())) {
+    showAlert("Aucune modification", "Vous n'avez apporté aucune modification.");
+    return;
+}
+
+        //  if (isUsernameTaken(newUserName)) {
+       //     showAlert("Erreur de modification", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
+       //     usernameProfilField.clear();
+       //     
+       //     return;
+      //  }
 
     currentUser.setFirstName(newFirstName);
     currentUser.setLastName(newLastName);
@@ -173,19 +184,19 @@ public class ProfilController implements Initializable {
 
     return email.matches(emailRegex);
 }
-    private boolean isUsernameTaken(String username) {
-        try {
-            con = Datasource.getInstance().getCnx(); // Use the connection from Datasource
-            String query = "SELECT * FROM user WHERE username = ?";
-            pre = con.prepareStatement(query);
-            pre.setString(1, username);
-            ResultSet rs = pre.executeQuery();
-            return rs.next(); // Return true if username exists in the database, false otherwise
-        } catch (SQLException ex) {
-            showAlert("Erreur d'inscription", "Erreur lors de la vérification de l'unicité du nom d'utilisateur.");
-            return false;
-        }
-    }
+   // private boolean isUsernameTaken(String username) {
+    //    try {
+     //       con = Datasource.getInstance().getCnx(); // Use the connection from Datasource
+     //       String query = "SELECT * FROM user WHERE username = ?";
+    //        pre = con.prepareStatement(query);
+    //        pre.setString(1, username);
+     //       ResultSet rs = pre.executeQuery();
+     //       return rs.next(); // Return true if username exists in the database, false otherwise
+    //    } catch (SQLException ex) {
+    //        showAlert("Erreur d'inscription", "Erreur lors de la vérification de l'unicité du nom d'utilisateur.");
+      //      return false;
+    //    }
+  //  }
     private boolean isValidPassword(String password) {
     // Check if the password is at least 8 characters long
     if (password.length() < 8) {

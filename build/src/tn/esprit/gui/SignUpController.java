@@ -99,13 +99,21 @@ public class SignUpController implements Initializable {
         String email = emailField.getText();
         String telephone = telephoneField.getText();
         String address = addressField.getText();
-        String role = roleComboBox.getValue().toString(); // Récupérer la valeur sélectionnée dans le ComboBox
-        
+      //  String role = roleComboBox.getValue().toString(); // Récupérer la valeur sélectionnée dans le ComboBox
+        String role = roleComboBox.getValue() != null ? roleComboBox.getValue().toString() : null;
+
  // Vérifier si les mots de passe correspondent
         if (!password.equals(confirmPassword)) {
             showAlert("Erreur d'inscription", "Les mots de passe ne correspondent pas.");
             return;
         }
+        if (username.isEmpty() && password.isEmpty() && confirmPassword.isEmpty() &&
+        firstName.isEmpty() && lastName.isEmpty() && email.isEmpty() &&
+        telephone.isEmpty() && address.isEmpty() && role == null) {
+        showAlert("Erreur d'inscription", "Veuillez remplir Tous les champs obligatoires avant de vous inscrire.");
+        return;
+    }
+        
          if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
         firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || role == null ) {
         showAlert("Erreur d'inscription", "Tous les champs obligatoires doivent être renseignés.");

@@ -174,13 +174,19 @@ public class AdminMainFormController implements Initializable {
         String email = emailDashField.getText();
         String telephone = numberDashField.getText();
         String address = AddressDashField.getText();
-        String role = roleDashComboBox.getValue().toString() ; // Récupérer la valeur sélectionnée dans le ComboBox
-        
+        //String role = roleDashComboBox.getValue().toString() ; // Récupérer la valeur sélectionnée dans le ComboBox
+         String role = roleDashComboBox.getValue() != null ? roleDashComboBox.getValue().toString() : null;
  // Vérifier si les mots de passe correspondent
         if (!password.equals(confirmPassword)) {
             showAlert("Erreur d'inscription", "Les mots de passe ne correspondent pas.");
             return;
         }
+         if (username.isEmpty() && password.isEmpty() && confirmPassword.isEmpty() &&
+        firstName.isEmpty() && lastName.isEmpty() && email.isEmpty() &&
+        telephone.isEmpty() && address.isEmpty() && role == null) {
+        showAlert("Erreur d'inscription", "Veuillez remplir Tous les champs obligatoires afin d'ajouter un utilisateur.");
+        return;
+    }
          if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
         firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || role == null ) {
         showAlert("Erreur d'inscription", "Tous les champs obligatoires doivent être renseignés.");
@@ -251,6 +257,10 @@ public class AdminMainFormController implements Initializable {
             // Get the selected user from the TableView
             User selectedUser = userTableView.getSelectionModel().getSelectedItem();
             
+             if (!selectedUser.getUsername().equals(usernamedashfield.getText()) && isUsernameTaken(usernamedashfield.getText())) {
+            showAlert("Input Error", "Username already taken. Please choose a different username.");
+            return;
+        }
             // Update the selected user's data with the data from text fields and ComboBox
             selectedUser.setUsername(usernamedashfield.getText());
             selectedUser.setEmail(emailDashField.getText());
@@ -260,20 +270,21 @@ public class AdminMainFormController implements Initializable {
             selectedUser.setTel(numberDashField.getText());
             selectedUser.setAddress(AddressDashField.getText());
             selectedUser.setRole(type);
-
+            
+            
              if (validateUserInput()) {
             // Call the service to update the user
             userService.modifier(selectedUser);
-
-            // Reload the user data in the TableView
             loadUserData();
+            // Reload the user data in the TableView
+         //  loadUserData();
              
 
             // Call the service to update the user
-            userService.modifier(selectedUser);
+          //  userService.modifier(selectedUser);
 
             // Reload the user data in the TableView
-            loadUserData();
+             
             // Show a success alert
         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
         successAlert.setTitle("Success");
@@ -332,8 +343,13 @@ public class AdminMainFormController implements Initializable {
             successAlert.setContentText("The user has been deleted successfully.");
             successAlert.showAndWait();
         }
+         } else {
+        // Affichez une alerte indiquant qu'aucun utilisateur n'a été sélectionné pour la suppression
+        showAlert("Error", "No User Selected for Deletion");
     }
 }
+    
+
 
    @FXML
 private void clearFields(ActionEvent event) {
@@ -386,6 +402,10 @@ private void clearFields(ActionEvent event) {
     String role = roleDashComboBox.getValue().toString();
 
     // Vérifier si les mots de passe correspondent
+    if (selectedUserIndex < 0) {
+        showAlert("Input Error", "Please select a user to update.");
+         return false;
+    }
     if (!password.equals(confirmPassword)) {
         showAlert("Erreur de saisie", "Les mots de passe ne correspondent pas.");
         return false;
@@ -393,7 +413,7 @@ private void clearFields(ActionEvent event) {
 
     if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
         firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || role == null) {
-        showAlert("Erreur de saisie", "Tous les champs obligatoires doivent être renseignés.");
+        showAlert("Erreur de modification", "Tous les champs obligatoires doivent être renseignés.");
         return false;
     }
 
@@ -401,13 +421,7 @@ private void clearFields(ActionEvent event) {
         showAlert("Erreur de saisie", "L'adresse e-mail n'est pas valide.");
         return false;
     }
-
-    if (isUsernameTaken(username)) {
-        showAlert("Erreur de saisie", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
-        usernamedashfield.clear();
-        return false;
-    }
-
+     
     if (!isValidPassword(password)) {
         showAlert("Erreur de saisie", "Le mot de passe doit avoir au moins 8 caractères et contenir au moins une majuscule.");
         passwordDashField.clear();

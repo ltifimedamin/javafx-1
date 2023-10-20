@@ -81,7 +81,7 @@ public class LoginController implements Initializable {
             
             Session.setCurrentUser(user);
             if (user.getRole() == UserRole.ADMIN) {
-            loadAdminOptionPage();
+            loadBackOfficePage();
         } else {
             loadHomePage();
              showAlert("Authentification réussie", "Bienvenue, " + user.getUsername());
@@ -143,7 +143,17 @@ public class LoginController implements Initializable {
         e.printStackTrace();
     }
 }
-
+ private void loadBackOfficePage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminMainForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
     
