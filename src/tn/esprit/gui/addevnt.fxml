@@ -41,5 +41,6 @@
       <TextField fx:id="TXTimg" editable="false" layoutX="171.0" layoutY="666.0" promptText="Url Img" />
       <ImageView fx:id="lbl_image" fitHeight="150.0" fitWidth="200.0" layoutX="419.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="chercher" layoutX="698.0" layoutY="665.0" mnemonicParsing="false" onAction="#chercher" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Recherche" />
+      <Button fx:id="excel" layoutX="472.0" layoutY="705.0" mnemonicParsing="false" onAction="#exportToExcel" prefHeight="26.0" prefWidth="73.0" text="excel" />
    </children>
 </AnchorPane>

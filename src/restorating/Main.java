@@ -9,6 +9,7 @@ package restorating;
 import java.sql.Connection;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import tn.esprit.entities.Evennement;
@@ -70,13 +71,11 @@ Participationservices participation=new Participationservices();
       
    // System.out.println("Resultas : " +participation.getAll());
      
-     List<Evennement> listev = new LinkedList<>();
+   /*  List<Evennement> listev = new LinkedList<>();
      listev = eventservice.recupererBytitre("party");
                  for(Evennement ee :listev  ){
            System.out.println("affiche :"+ee);
-        }
-        
-     
+        }*/        
     
     }
     

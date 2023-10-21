@@ -4,8 +4,13 @@
  * and open the template in the editor.
  */
 package tn.esprit.gui;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -34,6 +39,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.swing.JFileChooser;
 import tn.esprit.entities.Evennement;
@@ -99,6 +105,8 @@ public class AddevntController implements Initializable {
     private ImageView lbl_image;
     @FXML
     private Button chercher;
+    @FXML
+    private Button excel;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -117,8 +125,6 @@ public class AddevntController implements Initializable {
         String path= TXTimg.getText();
         System.out.println("PATH :"  +path);
        
-
-    
     
              Image imn = new Image(
               "file:/" +path );
@@ -184,7 +190,13 @@ public class AddevntController implements Initializable {
 
     @FXML
     private void supprimerevent(ActionEvent event) {
+        
          myIndex = EventTable.getSelectionModel().getSelectedIndex();
+         if (myIndex == -1) {
+        // Aucun élément sélectionné, affichez un message d'erreur à l'utilisateur.
+        showAlert("Aucun événement sélectionné", "Veuillez sélectionner un événement à supprimer.");
+        return;
+    }
        int idEvent = Integer.parseInt(String.valueOf(EventTable.getItems().get(myIndex).getId()));
        Evennement evennementPoursupprimer = new  Evennement( idEvent,"", LocalDate.now(),  "", "",  "", "");
         Eventservice Serviceevent = new Eventservice();
@@ -313,7 +325,73 @@ public class AddevntController implements Initializable {
     alert.setContentText(tous_les_champs_doivent_être_remplis);
     alert.showAndWait();
     }
+
+    @FXML
+    private void exportToExcel(ActionEvent event) {
+          FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter for Excel files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Excel files (.xlsx)", ".xlsx");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(excel.getScene().getWindow());
+
+        if (file != null) {
+            try {
+                // Create new Excel workbook and sheet
+                Workbook workbook = new XSSFWorkbook();
+
+                Sheet sheet = workbook.createSheet("Events");
+
+                // Create header row
+                Row headerRow = sheet.createRow(0);
+                headerRow.createCell(0).setCellValue("ID");
+                headerRow.createCell(1).setCellValue("Titre");
+                headerRow.createCell(2).setCellValue("Description");     
+                headerRow.createCell(3).setCellValue("Date");
+                headerRow.createCell(3).setCellValue("adresse");
+                headerRow.createCell(4).setCellValue("Lieu");
+
+                // Add data rows
+                Eventservice EventService = new  Eventservice();
+                List<Evennement> events = EventService.getAll();
+                for (int i = 0; i < events.size(); i++) {
+                    Row row = sheet.createRow(i + 1);
+                    row.createCell(0).setCellValue(events.get(i).getId());
+                    row.createCell(1).setCellValue(events.get(i).getTitre());
+                    row.createCell(2).setCellValue(events.get(i).getDescription());
+                    row.createCell(3).setCellValue(events.get(i).getDate());
+                      row.createCell(4).setCellValue(events.get(i).getAdresse());
+                    row.createCell(5).setCellValue(events.get(i).getLieu());
+                }
+
+                // Write to file
+                FileOutputStream fileOut = new FileOutputStream(file);
+                workbook.write(fileOut);
+                fileOut.close();
+                workbook.close();
+
+                // Show success message
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Export Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("Events exported to Excel file.");
+                alert.showAndWait();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Export Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("An error occurred while exporting events to Excel file.");
+                alert.showAndWait();
+            }
+        }
     }
+        
+    }
+    
     
 
 

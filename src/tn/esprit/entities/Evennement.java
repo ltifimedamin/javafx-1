@@ -5,7 +5,9 @@
  */
 package tn.esprit.entities;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Date;
@@ -20,7 +22,17 @@ import java.util.List;
 public class Evennement {
     private int id;
     private String titre;
-    private LocalDate date;
+    private LocalDate date;  
+    private Timestamp dateStamp;
+
+    public Timestamp getDateStamp() {
+        LocalDateTime localDateTime = date.atStartOfDay();
+        return Timestamp.valueOf(localDateTime);
+    }
+
+    public void setDateStamp(Timestamp dateStamp) {
+        this.dateStamp = dateStamp;
+    }
     private String  description;
     private String adresse;    
     private String img;

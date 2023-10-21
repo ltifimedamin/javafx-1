@@ -151,7 +151,26 @@ Connection cnx;
               System.out.println("ERROR SUPRIMER Participant :"+ex.getMessage());
           }
     }
+public int getNombreParticipants(int id) {
+    int nombreParticipants = 0;
 
+    // Requête SQL pour compter le nombre de participants pour un événement donné
+    String req = "SELECT COUNT(*) FROM participant WHERE idevent = ?";
+
+    try {
+        PreparedStatement pre = cnx.prepareStatement(req);
+        pre.setInt(1, id);
+
+        ResultSet rs = pre.executeQuery();
+        if (rs.next()) {
+            nombreParticipants = rs.getInt(1);
+        }
+    } catch (SQLException ex) {
+        System.out.println("Erreur lors de la récupération du nombre de participants : " + ex.getMessage());
+    }
+
+    return nombreParticipants;
+}
     
   
         
