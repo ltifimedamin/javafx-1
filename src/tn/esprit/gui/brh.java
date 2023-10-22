@@ -24,8 +24,10 @@ public class brh extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
- 
-       Parent root = FXMLLoader.load(getClass().getResource("Shopping.fxml"));
+        //AjouterPlat
+        //PlatWithImg
+        //AchatFXML
+       Parent root = FXMLLoader.load(getClass().getResource("PlatWithImg.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

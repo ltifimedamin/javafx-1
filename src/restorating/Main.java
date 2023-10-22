@@ -20,8 +20,13 @@ import tn.esprit.entities.User;
 import tn.esprit.services.ServiceAchat;
 import tn.esprit.services.ServicePlat;
 import tn.esprit.utils.Datasource;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 
 /**
+ * 
  *
  * @author remo
  */
@@ -33,10 +38,9 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here
-            
-        Connection cnx;
-                cnx = Datasource.getInstance().getCnx();
-            ServiceAchat sa = new ServiceAchat();
+       //     
+       //  Connection cnx;
+       ////  ServiceAchat sa = new ServiceAchat();
 
      /* List<Plat> list = pl.recuperer();
       for(int i=0;i<list.size();i++){
@@ -76,7 +80,7 @@ public class Main {
           //System.out.println("Affichage : <<< \n" + sa.recuperer());  
           // sa.modifier(a);
          // sa.supprimer(36);
-         ServicePlat p = ServicePlat.getInstance();
+       /*  ServicePlat p = ServicePlat.getInstance();
          Plat pp = new Plat(13, "hazem", "brahmi", "c://user/msi/download/kousski.png", 700f, CategorieP.Berger);
         List<Plat> plats = p.recupererByNom(pp.getNom());
             for (Plat plat : plats) {
@@ -90,18 +94,36 @@ public class Main {
             List<Achat> achatsByType = sa.recupererByType(typeARechercher);
 
             for (Achat achat : achatsByType) {
-                System.out.println("Achat par type: " + achat);*/
+                System.out.println("Achat par type: " + achat);
       
                 
                 
 
-     
-      }
-    
-    System.out.println("Plat par nom: " + p.recupererByNom("ha"));
+        System.out.println("Plat par nom: " + p.recupererByNom("ha"));
     
     
     }}
+      
+         
+*/
+        /*Document document = new Document();
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream("mon_fichier.pdf"));
+            document.open();
+
+            // Ajoutez du contenu au PDF
+            document.add(new Paragraph("Hello, world!"));
+            document.add(new Paragraph("Ceci est un exemple simple de fichier PDF généré avec iText."));
+
+            document.close();
+
+            System.out.println("Fichier PDF généré avec succès : mon_fichier.pdf");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+ }}
     
     
 

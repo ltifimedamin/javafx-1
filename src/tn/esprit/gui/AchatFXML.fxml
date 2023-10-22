@@ -7,13 +7,15 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="780.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.gui.AchatFXMLController">
    <children>
-      <TableView fx:id="achatTV" layoutX="109.0" layoutY="131.0" prefHeight="200.0" prefWidth="798.0">
+      <TableView fx:id="achatTV" layoutX="63.0" layoutY="126.0" prefHeight="200.0" prefWidth="827.0">
          <columns>
             <TableColumn fx:id="clientview" prefWidth="142.0" text="Client" />
             <TableColumn fx:id="platview" prefWidth="142.0" text="Plat" />
@@ -25,18 +27,18 @@
             <TableColumn fx:id="typeview" prefWidth="142.0" text="Type" />
          </columns>
       </TableView>
-      <TextField fx:id="Rechercheachat" layoutX="109.0" layoutY="89.0" prefHeight="26.0" prefWidth="798.0" promptText="Chercher une commande..." />
-      <Text layoutX="96.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client" />
-      <Text layoutX="95.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plat" />
-      <Text layoutX="95.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantite" />
-      <Text layoutX="401.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" />
+      <TextField fx:id="Rechercheachat" layoutX="161.0" layoutY="85.0" prefHeight="30.0" prefWidth="750.0" promptText="Chercher une commande..." />
+      <Text fill="#303030" layoutX="96.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Client" />
+      <Text fill="#303030" layoutX="95.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plat" />
+      <Text fill="#303030" layoutX="95.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantite" />
+      <Text fill="#303030" layoutX="401.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" />
       <TextField fx:id="nomclientacht" layoutX="191.0" layoutY="377.0" />
       <TextField fx:id="pltach" layoutX="189.0" layoutY="428.0" />
-      <Button fx:id="btajtach" layoutX="758.0" layoutY="370.0" mnemonicParsing="false" onAction="#AchatAdd" text="Ajouter" />
-      <Button fx:id="btmdfach" layoutX="758.0" layoutY="428.0" mnemonicParsing="false" onAction="#AchatUpdate" text="Modifier" />
-      <Button fx:id="btsupach" layoutX="757.0" layoutY="488.0" mnemonicParsing="false" onAction="#AchatDelete" text="Supprimer" />
+      <Button fx:id="btajtach" layoutX="758.0" layoutY="370.0" mnemonicParsing="false" onAction="#AchatAdd" stylesheets="@achat.css" text="Ajouter" />
+      <Button fx:id="btmdfach" layoutX="758.0" layoutY="428.0" mnemonicParsing="false" onAction="#AchatUpdate" stylesheets="@achat.css" text="Modifier" />
+      <Button fx:id="btsupach" layoutX="757.0" layoutY="488.0" mnemonicParsing="false" onAction="#AchatDelete" stylesheets="@achat.css" text="Supprimer" />
       <ComboBox fx:id="typeachbox" layoutX="489.0" layoutY="428.0" prefWidth="150.0" />
-      <Text layoutX="282.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion des Achats">
+      <Text fill="#ffa332" layoutX="282.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion des Achats">
          <font>
             <Font name="Times New Roman" size="46.0" />
          </font>
@@ -44,8 +46,19 @@
       <Button fx:id="rtrach" layoutX="787.0" layoutY="674.0" mnemonicParsing="false" onAction="#retour" text="Retour" />
       <TextField fx:id="mntnach" layoutX="489.0" layoutY="376.0" />
       <TextField fx:id="quntach" layoutX="190.0" layoutY="476.0" />
-      <Label layoutX="390.0" layoutY="380.0" text="Montant Total" />
+      <Label layoutX="390.0" layoutY="380.0" stylesheets="@achat.css" text="Montant Total" />
       <Label layoutX="401.0" layoutY="480.0" text="Date" />
-      <DatePicker fx:id="dateach" layoutX="477.0" layoutY="476.0" />
+      <DatePicker fx:id="dateach" layoutX="477.0" layoutY="476.0"  />
+      <ImageView fx:id="imgrechAch" fitHeight="33.0" fitWidth="30.0" layoutX="877.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../image/1300-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="typerechAch" layoutX="11.0" layoutY="85.0" prefHeight="30.0" prefWidth="150.0" promptText="Chercher Un Achat" />
+      <ImageView fx:id="actu_img" fitHeight="30.0" fitWidth="30.0" layoutX="896.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../image/actualiser.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

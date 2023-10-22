@@ -87,7 +87,7 @@ public class ShoppingController implements Initializable {
      */
     
     List<Achat> achatsUser= new ArrayList<Achat>();
-    TableView<Item> tableView = new TableView<>();
+    static TableView<Item> tableView = new TableView<>();
     @FXML
     private Button AnnulerAction;
     
@@ -156,9 +156,7 @@ panierImg.setOnMouseClicked((MouseEvent event) -> {
     // Définissez le style du fond de la boîte de dialogue en noir
     dialog.getDialogPane().setStyle("-fx-background-color: black;");
 
-    // Augmentez la largeur et la hauteur de la fenêtre Plats Items
-    dialog.getDialogPane().setMaxWidth(800);
-    dialog.getDialogPane().setMaxHeight(600);
+
 
     Optional<ButtonType> result = dialog.showAndWait();
     if (result.isPresent()) {
@@ -212,15 +210,12 @@ private void AjouterAuPanier(ActionEvent event) throws SQLException {
      
     tableView.getItems().addAll(item1);
     }
-
-   
-    
 }
 
 
 
 
-    public void PlatTable() throws SQLException{
+    public void PlatTable() throws SQLException {
      ServicePlat ServiceEvent= new ServicePlat();
      ArrayList<Plat> challengess = new ArrayList<>();
               

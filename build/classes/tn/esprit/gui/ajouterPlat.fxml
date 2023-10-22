@@ -5,6 +5,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -22,7 +24,7 @@
             <TableColumn fx:id="plat_idView" minWidth="0.0" prefWidth="0.0" text="id" />
          </columns>
       </TableView>
-      <TextField fx:id="Rechercheplt" layoutX="109.0" layoutY="89.0" prefHeight="26.0" prefWidth="714.0" promptText="Chercher un plat..." />
+      <TextField fx:id="Rechercheplt" layoutX="171.0" layoutY="89.0" prefHeight="33.0" prefWidth="714.0" promptText="Chercher un plat..." />
       <Text layoutX="96.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" />
       <Text layoutX="95.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
       <Text layoutX="96.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image" />
@@ -30,7 +32,7 @@
       <Text layoutX="415.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categorie" />
       <TextField fx:id="nomplt" layoutX="189.0" layoutY="377.0" />
       <TextField fx:id="descplt" layoutX="189.0" layoutY="428.0" />
-      <Button fx:id="imgplt" layoutX="189.0" layoutY="501.0" mnemonicParsing="false" text="Importer Image" />
+      <Button fx:id="imgplt" layoutX="189.0" layoutY="552.0" mnemonicParsing="false" onAction="#AddImg" text="Importer Image" />
       <Button fx:id="btajtplt" layoutX="758.0" layoutY="370.0" mnemonicParsing="false" onAction="#PlatAdd" text="Ajouter" />
       <Button fx:id="btmdfplt" layoutX="758.0" layoutY="428.0" mnemonicParsing="false" onAction="#PlatUpdate" text="Modifier" />
       <Button fx:id="btsupplt" layoutX="757.0" layoutY="488.0" mnemonicParsing="false" onAction="#PlatDeleted" text="Supprimer" />
@@ -42,5 +44,13 @@
       </Text>
       <Button fx:id="rtrplt" layoutX="787.0" layoutY="674.0" mnemonicParsing="false" text="Retour" />
       <TextField fx:id="prixplt" layoutX="490.0" layoutY="377.0" />
+      <ImageView fx:id="imgrech" fitHeight="44.0" fitWidth="33.0" layoutX="852.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../image/1300-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="typerech" layoutX="21.0" layoutY="89.0" prefHeight="33.0" prefWidth="150.0" promptText="Type Recherche" />
+      <TextField fx:id="TxtImg" editable="false" layoutX="189.0" layoutY="500.0" />
+      <ImageView fx:id="lbl_image" fitHeight="150.0" fitWidth="200.0" layoutX="441.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
