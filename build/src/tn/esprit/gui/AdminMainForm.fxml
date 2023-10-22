@@ -70,21 +70,21 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="563.0" prefWidth="881.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="561.0" prefWidth="891.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane layoutX="-318.0" prefHeight="566.0" prefWidth="917.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-318.0" AnchorPane.rightAnchor="282.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane layoutX="-324.0" layoutY="8.0" prefHeight="569.0" prefWidth="927.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="-324.0" AnchorPane.rightAnchor="288.0" AnchorPane.topAnchor="8.0">
                                  <children>
-                                    <AnchorPane layoutX="330.0" layoutY="305.0" prefHeight="261.0" prefWidth="856.0" stylesheets="@MainFormDesign.css" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="-269.0">
+                                    <AnchorPane layoutX="330.0" layoutY="305.0" prefHeight="255.0" prefWidth="852.0" stylesheets="@MainFormDesign.css" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="-255.0">
                                        <styleClass>
                                           <String fx:value="white-bg" />
                                           <String fx:value="shadow" />
                                           <String fx:value="radius" />
                                        </styleClass>
                                        <children>
-                                          <Button fx:id="add_buton_dash" layoutX="93.0" layoutY="188.0" mnemonicParsing="false" onAction="#addUser" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Add" />
-                                          <Button fx:id="update_button_dash" layoutX="288.0" layoutY="188.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Update" />
-                                          <Button fx:id="clea_button_dash" layoutX="463.0" layoutY="188.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Clear" />
-                                          <Button fx:id="delete_button_dash" layoutX="631.0" layoutY="187.0" mnemonicParsing="false" onAction="#deleteSelectedUser" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Delete" />
+                                          <Button fx:id="add_buton_dash" layoutX="17.0" layoutY="188.0" mnemonicParsing="false" onAction="#addUser" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Add" />
+                                          <Button fx:id="update_button_dash" layoutX="219.0" layoutY="188.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Update" />
+                                          <Button fx:id="clea_button_dash" layoutX="424.0" layoutY="188.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Clear" />
+                                          <Button fx:id="delete_button_dash" layoutX="625.0" layoutY="187.0" mnemonicParsing="false" onAction="#deleteSelectedUser" prefHeight="40.0" prefWidth="120.0" styleClass="btn" stylesheets="@MainForm.css" text="Delete" />
                                           <TextField fx:id="firstNameFielddasha" layoutX="14.0" layoutY="9.0" prefHeight="47.0" prefWidth="205.0" promptText="First Name" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: #ffffff;">
                                              <font>
                                                 <Font size="18.0" />
@@ -128,14 +128,14 @@
                                           </ComboBox>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="319.0" layoutY="48.0" prefHeight="207.0" prefWidth="878.0" stylesheets="@MainForm.css" AnchorPane.bottomAnchor="307.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="-280.0" AnchorPane.topAnchor="48.0">
+                                    <AnchorPane layoutX="334.0" layoutY="73.0" prefHeight="183.0" prefWidth="864.0" stylesheets="@MainForm.css" AnchorPane.bottomAnchor="307.0" AnchorPane.leftAnchor="334.0" AnchorPane.rightAnchor="-271.0" AnchorPane.topAnchor="73.0">
                                        <styleClass>
                                           <String fx:value="white-bg" />
                                           <String fx:value="shadow" />
                                           <String fx:value="radius" />
                                        </styleClass>
                                        <children>
-                                          <TableView fx:id="userTableView" layoutX="4.0" layoutY="9.0" prefHeight="180.0" prefWidth="848.0">
+                                          <TableView fx:id="userTableView" layoutX="15.0" layoutY="11.0" prefHeight="169.0" prefWidth="837.0">
                                             <columns>
                                               <TableColumn fx:id="userIdColumn" prefWidth="75.0" text="Id User" />
                                               <TableColumn fx:id="firstNameColumn" prefWidth="98.66668701171875" text="First Name" />
@@ -155,6 +155,10 @@
                                           <Font name="Arial Narrow Bold Italic" size="18.0" />
                                        </font>
                                     </Button>
+                                    <Label layoutX="334.0" prefHeight="19.0" prefWidth="146.0" styleClass="btn" stylesheets="@MainForm.css" text="Search by User Name" />
+                                    <TextField fx:id="searchUsernameField" layoutX="510.0" layoutY="-2.0" prefHeight="18.0" prefWidth="118.0" />
+                                    <Button fx:id="searchButton" layoutX="674.0" layoutY="-4.0" mnemonicParsing="false" onAction="#searchByUsername" prefHeight="19.0" prefWidth="91.0" styleClass="btn" stylesheets="@MainForm.css" text="Search" />
+                                    <Button fx:id="refreshButton" layoutX="676.0" layoutY="42.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="26.0" prefWidth="86.0" styleClass="btn" stylesheets="@MainForm.css" text="Refresh" />
                                  </children>
                               </AnchorPane>
                            </children>

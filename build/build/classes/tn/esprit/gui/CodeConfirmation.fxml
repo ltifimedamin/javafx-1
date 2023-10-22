@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="tn.esprit.gui.CodeConfirmationController">
+   <children>
+      <AnchorPane layoutX="-3.0" prefHeight="510.0" prefWidth="226.0" style="-fx-background-color: #b0f2b6;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Downloads/1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="318.0" layoutY="99.0" prefHeight="40.0" prefWidth="186.0" text="Entrez e code " textFill="#181818" />
+      <TextField fx:id="codeField" layoutX="289.0" layoutY="152.0" />
+      <Button fx:id="submitButton" layoutX="338.0" layoutY="203.0" mnemonicParsing="false" onAction="#verifyCode" prefHeight="26.0" prefWidth="73.0" text="Submit" />
+   </children>
+</AnchorPane>

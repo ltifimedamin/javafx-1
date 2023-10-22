@@ -168,4 +168,63 @@ public class ServiceUser implements IServiceUser {
 
         return user;
     }
+     public List<User> searchByUsername(String username) {
+        List<User> searchResults = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM user WHERE username LIKE ?";
+            pre = con.prepareStatement(query);
+            pre.setString(1, "%" + username + "%"); // Use a wildcard to find usernames containing the entered text
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                User user = new User();
+                user.setIduser(rs.getInt("iduser"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
+                user.setTel(rs.getString("tel"));
+                user.setAddress(rs.getString("address"));
+                user.setRole(UserRole.valueOf(rs.getString("role"))); // Convert the string to an enum
+
+                searchResults.add(user);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return searchResults;
+    }
+     public boolean isEmailRegistered(String email) {
+    try {
+        String query = "SELECT COUNT(*) FROM user WHERE email = ?";
+        pre = con.prepareStatement(query);
+        pre.setString(1, email);
+        ResultSet resultSet = pre.executeQuery();
+        
+        if (resultSet.next()) {
+            int count = resultSet.getInt(1);
+            return count > 0; // Return true if count is greater than 0, indicating that the email is registered
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+    
+    return false; // Return false by default (an error occurred or email not found)
+}
+public void updateUserPasswordByEmail(String email, String newPassword) {
+    try {
+        String query = "UPDATE user SET password = ? WHERE email = ?";
+        pre = con.prepareStatement(query);
+        pre.setString(1, newPassword);
+        pre.setString(2, email);
+        pre.executeUpdate();
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
 }

@@ -100,6 +100,10 @@ public class AdminMainFormController implements Initializable {
     private TableColumn<?, ?> addressColumn;
     @FXML
     private TableColumn<?, ?> roleColumn;
+    @FXML
+    private TextField searchUsernameField;    
+    @FXML
+    private Button searchButton;
 
     /**
      * Initializes the controller class.
@@ -110,6 +114,7 @@ public class AdminMainFormController implements Initializable {
     private PreparedStatement pre;
     private Statement ste;
     @FXML
+    private Button refreshButton;
     
     public void loadUserData() {
     ServiceUser serviceUser = new ServiceUser();
@@ -124,10 +129,11 @@ public class AdminMainFormController implements Initializable {
          ObservableList <String> list = FXCollections.observableArrayList("CLIENT", "EXPERT", "ADMIN");
          roleDashComboBox.setItems(list);
          delete_button_dash.setOnAction(event -> deleteSelectedUser());
+         searchButton.setOnAction(event -> searchByUsername(event));
         userService = new ServiceUser();
 
         // Configurez les CellValueFactory pour chaque colonne en utilisant PropertyValueFactory
-        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("iduser"));
+     //   userIdColumn.setCellValueFactory(new PropertyValueFactory<>("iduser"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         userNameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -316,6 +322,7 @@ public class AdminMainFormController implements Initializable {
 
     return email.matches(emailRegex);
 }
+    @FXML
     public void deleteSelectedUser() {
     User selectedUser = userTableView.getSelectionModel().getSelectedItem();
 
@@ -430,7 +437,6 @@ private void clearFields(ActionEvent event) {
 
     return true; // La saisie est valide
 }
-     @FXML
      private void chartsSetting() {
     try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Charts.fxml"));
@@ -442,7 +448,36 @@ private void clearFields(ActionEvent event) {
             e.printStackTrace();
         }
 
-     }}
+     }
+
+    @FXML
+    private void searchByUsername(ActionEvent event) {
+         String searchUsername = searchUsernameField.getText().trim();
+
+    if (searchUsername.isEmpty()) {
+        showAlert("Input Error", "Please enter a username to search for.");
+        return;
+    }
+
+    List<User> searchResults = userService.searchByUsername(searchUsername);
+
+    if (searchResults.isEmpty()) {
+        showAlert("Search Results", "No users found with the provided username.");
+    } else {
+        ObservableList<User> searchResultsList = FXCollections.observableArrayList(searchResults);
+        userTableView.setItems(searchResultsList);
+          
+       
+    }
+    
+    }
+
+    @FXML
+    private void refreshTable(ActionEvent event) {
+    loadUserData();
+    searchUsernameField.clear();
+    }
+}
 
 /*
     @Override

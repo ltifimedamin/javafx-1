@@ -29,6 +29,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.RandomStringUtils;
 import tn.esprit.entities.User;
 import tn.esprit.entities.UserRole;
 import tn.esprit.services.ServiceUser;
@@ -125,7 +126,10 @@ public class SignUpController implements Initializable {
         return;
     }
           if (isUsernameTaken(username)) {
-            showAlert("Erreur d'inscription", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
+         //   showAlert("Erreur d'inscription", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
+             String suggestedUsername = generateSuggestedUsername(username);
+             showAlert("Username Taken", "The username is already in use. You can try a different one or use the suggested username: " + suggestedUsername);
+   
             usernameSignupField.clear();
             confirmPasswordSignupField.clear();
             return;
@@ -223,6 +227,12 @@ public class SignUpController implements Initializable {
     addressField.clear();
     roleComboBox.getSelectionModel().clearSelection();
 }
+     private String generateSuggestedUsername(String username) {
+        // Generate a random alphanumeric suffix of 3 characters
+        String randomSuffix = RandomStringUtils.randomAlphanumeric(3);
+        return username + randomSuffix;
+    }
+
 }
     
 

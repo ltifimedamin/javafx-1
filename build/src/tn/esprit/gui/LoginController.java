@@ -85,7 +85,8 @@ public class LoginController implements Initializable {
         } else {
             loadHomePage();
              showAlert("Authentification réussie", "Bienvenue, " + user.getUsername());
-             loadHomePage();
+             
+             //// the error is here as well 
         }
            
               // user is the authenticated user
@@ -123,26 +124,17 @@ public class LoginController implements Initializable {
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
         Parent root = loader.load();
-       // HomeController homeController = loader.getController();
+        HomeController homeController = loader.getController();
       //  homeController.initUser(user); // Initialisation des données de l'utilisateur
         Stage stage = (Stage) loginButton.getScene().getWindow();
+        ///the error is here 
         stage.setScene(new Scene(root));
         stage.show();
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
-    private void loadAdminOptionPage() {
-    try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AdminOption.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
+  
  private void loadBackOfficePage() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminMainForm.fxml"));
@@ -156,5 +148,16 @@ public class LoginController implements Initializable {
     }
 
 }
-    
+    /*  private void loadAdminOptionPage() {
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AdminOption.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+*/
 
