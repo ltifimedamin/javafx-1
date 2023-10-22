@@ -1,13 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tn.esprit.gui;
+
+    package tn.esprit.gui;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import java.awt.image.BufferedImage;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+    
+
+
+
+import javafx.scene.image.Image;
+
+
+    
+    
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +31,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -107,6 +118,8 @@ public class AddevntController implements Initializable {
     private Button chercher;
     @FXML
     private Button excel;
+    @FXML
+    private ImageView qrCodeImageView;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -135,31 +148,41 @@ public class AddevntController implements Initializable {
         
         
     }
- 
     @FXML
-    private void addevent(ActionEvent event) {
-      if (isInputValid()) {  
-     String titre;
-     LocalDate date;
-     String  description;
-     String adresse;    
-     String img;   
-     String lieu ;
-    titre =recTitre.getText();
-    description= recDiscription.getText();
-    adresse= recAdresse.getText();
-    date= recDate.getValue();
-    lieu =recLieu.getText();
-    img =TXTimg.getText();
- 
-    Evennement evennementPourAjouter = new  Evennement( titre, date,  description, img,  adresse, lieu);
-    Eventservice Serviceevent = new Eventservice();
+private void addevent(ActionEvent event) {
+    if (isInputValid()) {
+        String titre;
+        LocalDate date;
+        String description;
+        String adresse;
+        String img;
+        String lieu;
 
-    Serviceevent.ajouter(evennementPourAjouter);
-     showAlert("AJOUTER AVEC SUCCES", "AJOUTER AVEC SUCCES");
-    EventTable();
-       }  
+        titre = recTitre.getText();
+        description = recDiscription.getText();
+        adresse = recAdresse.getText();
+        date = recDate.getValue();
+        lieu = recLieu.getText();
+        img = TXTimg.getText();
+
+        Evennement evennementPourAjouter = new Evennement(titre, date, description, img, adresse, lieu);
+        Eventservice Serviceevent = new Eventservice();
+
+        // Ajoutez l'événement
+        Serviceevent.ajouter(evennementPourAjouter);
+
+        // Générez le code QR
+        String eventInfo = "Titre : " + titre + "\nDate : " + date + "\nDescription : " + description + "\nAdresse : " + adresse;
+        Image qrCodeImage = generateQRCodeImage(eventInfo, 200, 200);
+
+        // Affichez le code QR dans l'ImageView
+        qrCodeImageView.setImage(qrCodeImage);
+
+        showAlert("AJOUTER AVEC SUCCES", "AJOUTER AVEC SUCCES");
+        EventTable();
     }
+}
+    
 
     @FXML
     private void Modifierevent(ActionEvent event) {
@@ -326,8 +349,11 @@ public class AddevntController implements Initializable {
     alert.showAndWait();
     }
 
-    @FXML
+   @FXML
     private void exportToExcel(ActionEvent event) {
+        
+       
+        
           FileChooser fileChooser = new FileChooser();
 
         // Set extension filter for Excel files
@@ -350,8 +376,8 @@ public class AddevntController implements Initializable {
                 headerRow.createCell(1).setCellValue("Titre");
                 headerRow.createCell(2).setCellValue("Description");     
                 headerRow.createCell(3).setCellValue("Date");
-                headerRow.createCell(3).setCellValue("adresse");
-                headerRow.createCell(4).setCellValue("Lieu");
+                headerRow.createCell(4).setCellValue("adresse");
+                headerRow.createCell(5).setCellValue("Lieu");
 
                 // Add data rows
                 Eventservice EventService = new  Eventservice();
@@ -361,7 +387,7 @@ public class AddevntController implements Initializable {
                     row.createCell(0).setCellValue(events.get(i).getId());
                     row.createCell(1).setCellValue(events.get(i).getTitre());
                     row.createCell(2).setCellValue(events.get(i).getDescription());
-                    row.createCell(3).setCellValue(events.get(i).getDate());
+                    row.createCell(3).setCellValue(events.get(i).getDate().toString());
                       row.createCell(4).setCellValue(events.get(i).getAdresse());
                     row.createCell(5).setCellValue(events.get(i).getLieu());
                 }
@@ -379,6 +405,8 @@ public class AddevntController implements Initializable {
                 alert.setContentText("Events exported to Excel file.");
                 alert.showAndWait();
 
+            
+            
             } catch (Exception e) {
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -389,12 +417,42 @@ public class AddevntController implements Initializable {
             }
         }
     }
-        
+    
+       private Image generateQRCodeImage(String text, int width, int height) {
+    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+    BitMatrix bitMatrix;
+    try {
+        bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+
+        // Convertir la matrice BitMatrix en image JavaFX
+        BufferedImage bufferedImage = toBufferedImage(bitMatrix);
+        return SwingFXUtils.toFXImage(bufferedImage, null);
+    } catch (WriterException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
+private BufferedImage toBufferedImage(BitMatrix bitMatrix) {
+    int width = bitMatrix.getWidth();
+    int height = bitMatrix.getHeight();
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            image.setRGB(x, y, bitMatrix.get(x, y) ? 0x000000 : 0xFFFFFF);
+        }
+    }
+    return image;
+}
     }
     
     
 
 
     
+    
+
+
+
     
 

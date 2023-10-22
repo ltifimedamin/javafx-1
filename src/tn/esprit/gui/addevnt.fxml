@@ -34,13 +34,14 @@
       <Button fx:id="btnAjouter" layoutX="698.0" layoutY="443.0" mnemonicParsing="false" onAction="#addevent" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Ajouter" textFill="#151515" />
       <Button fx:id="btnmodifier" layoutX="698.0" layoutY="504.0" mnemonicParsing="false" onAction="#Modifierevent" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Modifier" />
       <Button fx:id="btnSupprimer" layoutX="698.0" layoutY="568.0" mnemonicParsing="false" onAction="#supprimerevent" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Supprimer" />
-      <TextField fx:id="recChercher" layoutX="419.0" layoutY="618.0" prefHeight="26.0" prefWidth="457.0" promptText="Chercher evennement ........" />
+      <TextField fx:id="recChercher" layoutX="677.0" layoutY="618.0" prefHeight="26.0" prefWidth="200.0" promptText="Chercher evennement ........" />
       <Label layoutX="77.0" layoutY="586.0" text="Lieu" textFill="#fea347" />
       <TextField fx:id="recLieu" layoutX="170.0" layoutY="581.0" />
       <Button fx:id="Participantajoouter" layoutX="698.0" layoutY="718.0" mnemonicParsing="false" onAction="#addParticipant" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="participer" />
       <TextField fx:id="TXTimg" editable="false" layoutX="171.0" layoutY="666.0" promptText="Url Img" />
-      <ImageView fx:id="lbl_image" fitHeight="150.0" fitWidth="200.0" layoutX="419.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="lbl_image" fitHeight="128.0" fitWidth="200.0" layoutX="400.0" layoutY="405.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="chercher" layoutX="698.0" layoutY="665.0" mnemonicParsing="false" onAction="#chercher" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #fea347;" text="Recherche" />
-      <Button fx:id="excel" layoutX="472.0" layoutY="705.0" mnemonicParsing="false" onAction="#exportToExcel" prefHeight="26.0" prefWidth="73.0" text="excel" />
+      <Button fx:id="excel" layoutX="472.0" layoutY="731.0" mnemonicParsing="false" onAction="#exportToExcel" prefHeight="26.0" prefWidth="73.0" text="excel" />
+      <ImageView fx:id="qrCodeImageView" fitHeight="119.0" fitWidth="175.0" layoutX="413.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
