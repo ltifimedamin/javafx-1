@@ -225,6 +225,37 @@ public void updateUserPasswordByEmail(String email, String newPassword) {
         System.out.println(ex.getMessage());
     }
 }
+    public List<User> advancedSearch(String searchAttribute, String searchValue) {
+    List<User> searchResults = new ArrayList<>();
 
+    try {
+        String query = "SELECT * FROM user WHERE " + searchAttribute + " LIKE ?";
+        pre = con.prepareStatement(query);
+        pre.setString(1, "%" + searchValue + "%"); // Use a wildcard to find values containing the entered text
+        ResultSet rs = pre.executeQuery();
+
+        while (rs.next()) {
+            User user = new User();
+            user.setIduser(rs.getInt("iduser"));
+            user.setUsername(rs.getString("username"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            user.setFirstName(rs.getString("firstName"));
+            user.setLastName(rs.getString("lastName"));
+            user.setTel(rs.getString("tel"));
+            user.setAddress(rs.getString("address"));
+            user.setRole(UserRole.valueOf(rs.getString("role"))); // Convert the string to an enum
+
+            searchResults.add(user);
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+    }
+
+    return searchResults;
+}
 
 }
+
+
+

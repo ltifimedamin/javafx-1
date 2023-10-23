@@ -5,6 +5,7 @@
  */
 package tn.esprit.gui;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -115,6 +116,13 @@ public class AdminMainFormController implements Initializable {
     private Statement ste;
     @FXML
     private Button refreshButton;
+    @FXML
+    private ComboBox<String> searchAttributeComboBox;
+
+    @FXML
+    private TextField searchValueTextField;
+    @FXML
+    private Button advancedSearchButton;
     
     public void loadUserData() {
     ServiceUser serviceUser = new ServiceUser();
@@ -124,12 +132,23 @@ public class AdminMainFormController implements Initializable {
 }
      @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // In your initialize method, set up the ComboBox with available search attributes
+    ObservableList<String> searchAttributes = FXCollections.observableArrayList(
+    "username", "firstName", "lastName", "email", "address", "role"
+      );
+           searchAttributeComboBox.setItems(searchAttributes);
+
+// Add a listener for the advanced search button
+          
+        
+        
+        
        dashTestButton.setOnAction(event -> chartsSetting());
         // Initialisez ici les autres éléments si nécessaire
          ObservableList <String> list = FXCollections.observableArrayList("CLIENT", "EXPERT", "ADMIN");
          roleDashComboBox.setItems(list);
          delete_button_dash.setOnAction(event -> deleteSelectedUser());
-         searchButton.setOnAction(event -> searchByUsername(event));
+    //     searchButton.setOnAction(event -> searchByUsername(event));
         userService = new ServiceUser();
 
         // Configurez les CellValueFactory pour chaque colonne en utilisant PropertyValueFactory
@@ -450,32 +469,49 @@ private void clearFields(ActionEvent event) {
 
      }
 
-    @FXML
-    private void searchByUsername(ActionEvent event) {
-         String searchUsername = searchUsernameField.getText().trim();
+   // @FXML
+  //  private void searchByUsername(ActionEvent event) {
+    //     String searchUsername = searchUsernameField.getText().trim();
 
-    if (searchUsername.isEmpty()) {
-        showAlert("Input Error", "Please enter a username to search for.");
-        return;
-    }
+  //  if (searchUsername.isEmpty()) {
+   //     showAlert("Input Error", "Please enter a username to search for.");
+  //      return;
+  //  }
 
-    List<User> searchResults = userService.searchByUsername(searchUsername);
+ //   List<User> searchResults = userService.searchByUsername(searchUsername);
 
-    if (searchResults.isEmpty()) {
-        showAlert("Search Results", "No users found with the provided username.");
-    } else {
-        ObservableList<User> searchResultsList = FXCollections.observableArrayList(searchResults);
-        userTableView.setItems(searchResultsList);
+ //   if (searchResults.isEmpty()) {
+     //   showAlert("Search Results", "No users found with the provided username.");
+  //  } else {
+     //   ObservableList<User> searchResultsList = FXCollections.observableArrayList(searchResults);
+     //   userTableView.setItems(searchResultsList);
           
        
-    }
+   // }
     
-    }
+  //  }
 
     @FXML
     private void refreshTable(ActionEvent event) {
     loadUserData();
     searchUsernameField.clear();
+    }
+
+    @FXML
+    private void performAdvancedSearch(ActionEvent event) {
+          String searchAttribute = searchAttributeComboBox.getValue();
+    String searchValue = searchValueTextField.getText().trim();
+
+    if (searchAttribute == null || searchValue.isEmpty()) {
+        showAlert("Input Error", "Please select a search attribute and enter a search value.");
+        return;
+    }
+
+    List<User> searchResults = userService.advancedSearch(searchAttribute, searchValue);
+
+    // Update the TableView with the search results
+    ObservableList<User> searchResultsList = FXCollections.observableArrayList(searchResults);
+    userTableView.setItems(searchResultsList);
     }
 }
 

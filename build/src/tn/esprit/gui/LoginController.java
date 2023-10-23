@@ -66,8 +66,13 @@ public class LoginController implements Initializable {
             }
         }
     });
-    
-    }   
+     forgotPasswordLink.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                loadResetPasswordPage();
+            }
+      }); 
+   }           
      @FXML
     private void handleLoginButtonAction(ActionEvent event) {
         String username = usernameTextField.getText();
@@ -139,6 +144,18 @@ public class LoginController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminMainForm.fxml"));
             Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+  private void loadResetPasswordPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ResetPassword.fxml"));
+            Parent root = loader.load();
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();

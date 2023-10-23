@@ -64,13 +64,20 @@ public class CodeConfirmationController implements Initializable {
     }
 
     private void loadChangePasswordInterface(ActionEvent event) throws IOException  {
-        Parent changePasswordParent = FXMLLoader.load(getClass().getResource("ChangedPassword.fxml"));
-        Scene changePasswordScene = new Scene(changePasswordParent, 600, 500);
+         try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangedPassword.fxml"));
+        Parent root = loader.load();
 
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(changePasswordScene);
-        window.show();
-    }
+        // Create a new stage for the login page
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Change Password");
+        stage.show();
+
+       
+    } catch (IOException e) {
+        e.printStackTrace();
+    }}
 
     
 }

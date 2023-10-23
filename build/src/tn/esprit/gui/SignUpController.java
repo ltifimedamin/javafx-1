@@ -66,6 +66,10 @@ public class SignUpController implements Initializable {
      private Connection con;
     private PreparedStatement pre;
     private Statement ste;
+    @FXML
+    private TextField suggestedUsernameField;
+    @FXML
+    private Button SuggestionButton;
 
     /**
      * Initializes the controller class.
@@ -129,7 +133,7 @@ public class SignUpController implements Initializable {
          //   showAlert("Erreur d'inscription", "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.");
              String suggestedUsername = generateSuggestedUsername(username);
              showAlert("Username Taken", "The username is already in use. You can try a different one or use the suggested username: " + suggestedUsername);
-   
+              suggestedUsernameField.setText(suggestedUsername);
             usernameSignupField.clear();
             confirmPasswordSignupField.clear();
             return;
@@ -231,6 +235,11 @@ public class SignUpController implements Initializable {
         // Generate a random alphanumeric suffix of 3 characters
         String randomSuffix = RandomStringUtils.randomAlphanumeric(3);
         return username + randomSuffix;
+    }
+
+    @FXML
+    private void useSuggestion(ActionEvent event) {
+          usernameSignupField.setText(suggestedUsernameField.getText());
     }
 
 }

@@ -51,7 +51,12 @@ public class ChangedPasswordController implements Initializable {
     private void changePassword(ActionEvent event) {
         String newPassword = NewPasswordChangeField.getText();
         String confirmPassword = ConfirmPasswordChangeField.getText();
-
+          if (!isValidPassword(newPassword)) {
+        showAlert("Erreur d'inscription", "Le mot de passe doit avoir au moins 8 caractères et contenir au moins une majuscule.", "try again");
+        NewPasswordChangeField.clear();
+        ConfirmPasswordChangeField.clear();
+        return;
+    }
         if (!newPassword.equals(confirmPassword)) {
             showAlert("Warning", "Passwords don't match", "Please make sure the new passwords match.");
         } else {
@@ -89,5 +94,19 @@ public class ChangedPasswordController implements Initializable {
     } catch (IOException e) {
         e.printStackTrace();
     }}
+    
+     private boolean isValidPassword(String password) {
+    // Check if the password is at least 8 characters long
+    if (password.length() < 8) {
+        return false;
+    }
+
+    // Check if the password contains at least one uppercase letter
+    if (!password.matches(".*[A-Z].*")) {
+        return false;
+    }
+
+    return true;
+}
 }
 
